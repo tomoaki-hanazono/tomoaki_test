@@ -22,6 +22,10 @@ import taijukiroku.logic.UserInfoLogic;
 @WebServlet("/Login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private UserInfoLogic uLogic = new UserInfoLogic();
+	private TaijukirokuLogic tLogic = new TaijukirokuLogic();
+	private List<String> message = new ArrayList<>();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,9 +39,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		UserInfoLogic logic = new UserInfoLogic();
-		
-		List<UserInfo> list = logic.getUserInfoList();
+		List<UserInfo> list = uLogic.getUserInfoList();
 		request.setAttribute("userInfoList", list);
 
 		String view = "/WEB-INF/view/login/login.jsp";
@@ -51,10 +53,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		UserInfoLogic uLogic = new UserInfoLogic();
-		TaijukirokuLogic tLogic = new TaijukirokuLogic();
-		
 		request.setCharacterEncoding("utf-8");
+		message = new ArrayList<>();
 		
 		String userNo = request.getParameter("userNo");
 		UserInfo userInfo = uLogic.getUserInfo(Integer.valueOf(userNo));
@@ -62,7 +62,8 @@ public class LoginServlet extends HttpServlet {
 		String nextView = null;
 		
 		if(userInfo == null) {
-			request.setAttribute("message", "ユーザ情報が存在しません。");
+			message.add("ユーザが存在しません。");
+			request.setAttribute("message", message);
 			this.doGet(request, response);
 		} else {
 			List<TaijuInfo> taijuInfoList = tLogic.getTaijuInfoList(Integer.valueOf(userNo));

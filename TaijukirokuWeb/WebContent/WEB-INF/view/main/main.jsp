@@ -5,7 +5,7 @@
 <%@ page import="taijukiroku.bean.TaijuInfo" %>
 <%  UserInfo userInfo=(UserInfo)request.getAttribute("userInfo"); %>
 <%  List<TaijuInfo>TList=(List<TaijuInfo>)request.getAttribute("taijuInfoList"); %>
-<%  String message = (String)request.getAttribute("message"); %>
+<%  List<String> messageList = (List<String>)request.getAttribute("message"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,8 +82,10 @@
 	<input type="submit" value="登録" name="regist">
 </form>
 <hr>
-<% if (message != null) { %>
+<% if (messageList != null && messageList.size() > 0) { %>
+<% for (String message : messageList) { %>
 <p style="color:red"><%= message %></p>
+<% } %>
 <hr>
 <% } %>
 <table>

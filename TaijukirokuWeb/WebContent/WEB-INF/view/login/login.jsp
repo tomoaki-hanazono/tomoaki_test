@@ -3,7 +3,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="taijukiroku.bean.UserInfo" %>
 <%  List<UserInfo>UList=(List<UserInfo>)request.getAttribute("userInfoList"); %>
-<%  String message = (String)request.getAttribute("message"); %>
+<%  List<String> messageList = (List<String>)request.getAttribute("message"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +13,10 @@
 <body>
 <h1>ログイン</h1>
 <hr>
-<% if (message != null) { %>
+<% if (messageList != null && messageList.size() > 0) { %>
+<% for (String message : messageList) { %>
 <p style="color:red"><%= message %></p>
+<% } %>
 <hr>
 <% } %>
 <form method="post" action="./Login">
