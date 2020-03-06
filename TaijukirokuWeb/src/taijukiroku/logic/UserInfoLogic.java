@@ -23,7 +23,7 @@ public class UserInfoLogic {
 			userInfoList = dao.selectAll();
 			
 		}catch(Exception e){
-			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return userInfoList;
@@ -46,10 +46,21 @@ public class UserInfoLogic {
 			userInfo = dao.select(userNo);
 			
 		}catch(Exception e){
-			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return userInfo;
+	}
+	
+	public void registUser(UserInfo userInfo) {		
+		try {
+			UserInfoDAO dao = new UserInfoDAO();
+			
+			dao.insert(userInfo);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

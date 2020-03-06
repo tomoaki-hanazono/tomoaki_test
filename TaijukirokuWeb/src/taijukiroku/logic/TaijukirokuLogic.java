@@ -15,9 +15,21 @@ public class TaijukirokuLogic {
 			taijuInfoList = dao.selectForUserNo(userNo);
 			
 		}catch(Exception e){
-			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return taijuInfoList;
+	}
+	
+	public void registTaijuInfo(TaijuInfo taijuInfo) {
+		try {
+			TaijuInfoDAO dao = new TaijuInfoDAO();
+			
+			dao.insert(taijuInfo);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 }

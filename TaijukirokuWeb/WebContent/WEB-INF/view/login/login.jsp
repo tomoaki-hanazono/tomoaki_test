@@ -3,6 +3,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="taijukiroku.bean.UserInfo" %>
 <%  List<UserInfo>UList=(List<UserInfo>)request.getAttribute("userInfoList"); %>
+<%  String message = (String)request.getAttribute("message"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +13,14 @@
 <body>
 <h1>ログイン</h1>
 <hr>
+<% if (message != null) { %>
+<p style="color:red"><%= message %></p>
+<hr>
+<% } %>
 <form method="post" action="./Login">
 	<div>
 	名前
-	<select name="userName">
+	<select name="userNo">
 	<option value="0"></option>
 	<% if (UList != null && UList.size() > 0) { %>
 	<% for (UserInfo userInfo : UList) { %>
@@ -27,6 +32,8 @@
 	</select>
 	</div>
 	<input type="submit" value="ログイン" id="login">
+	<br>
+	<a href="./userRegist">新規ユーザ登録</a>
 </form>
 </body>
 </html>

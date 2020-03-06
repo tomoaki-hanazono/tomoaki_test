@@ -1,33 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.List"%>
-<%@ page import="taijukiroku.bean.UserInfo" %>
-<%@ page import="taijukiroku.bean.TaijuInfo" %>
-<%  UserInfo userInfo=(UserInfo)request.getAttribute("userInfo"); %>
-<%  List<TaijuInfo>TList=(List<TaijuInfo>)request.getAttribute("taijuInfoList"); %>
-<%  String message = (String)request.getAttribute("message"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>体重記録</title>
+<title>新規ユーザ登録</title>
 </head>
 <body>
-<h1>体重記録</h1>
-<hr>
-<div>
-<%= userInfo.getUserName() %>
-生年月日:<%= userInfo.getBirthday().substring(0,4) %>年
-<%= userInfo.getBirthday().substring(4,6) %>月
-<%= userInfo.getBirthday().substring(6,8) %>日
-身長:<%= userInfo.getHeight() %>cm
-</div>
-<form method="post" action="./main">
+<form method="post" action="./userRegist">
+	名前
+	<input type="text" name="userName">
+	<br>
+	生年月日
 	<select name="yaer">
+		<option value="1921">1921</option>
+		<option value="1931">1931</option>
+		<option value="1941">1941</option>
+		<option value="1951">1951</option>
+		<option value="1961">1961</option>
+		<option value="1971">1971</option>
+		<option value="1981">1981</option>
+		<option value="1991">1991</option>
+		<option value="2001">2001</option>
 		<option value="2019">2019</option>
 		<option value="2020">2020</option>
-		<option value="2021">2021</option>
-		<option value="2022">2022</option>
 	</select>年
 	<select name="month">
 		<option value="01">1</option>
@@ -76,35 +72,16 @@
 		<option value="30">30</option>
 		<option value="31">31</option>
 	</select>日
-	<input type="text" name="weight">kg
-	<input type="hidden" name="userNo" value="<%= userInfo.getUserNo() %>">
-	<input type="hidden" name="height" value="<%= userInfo.getHeight() %>">
-	<input type="submit" value="登録" name="regist">
+	<br>
+	電話番号
+	<input type="text" name="phoneNum">
+	<br>
+	身長
+	<input type="text" name="height">
+	<br>
+	<input type="submit" name="regist" value="登録">
 </form>
-<hr>
-<% if (message != null) { %>
-<p style="color:red"><%= message %></p>
-<hr>
-<% } %>
-<table>
-	<tr><th>年月日</th><th>体重</th><th>BMI値</th><th>判定</th></tr>
-	<% if (TList != null && TList.size() > 0) { %>
-	<% for (TaijuInfo taijuInfo : TList) { %>
-	<tr>
-	<td>
-	<%= taijuInfo.getDate().substring(0,4) %>年
-	<%= taijuInfo.getDate().substring(4,6) %>月
-	<%= taijuInfo.getDate().substring(6,8) %>日
-	</td>
-	<td><%= taijuInfo.getBodyWeight() %>kg</td>
-	<td><%= taijuInfo.getBmi() %></td>
-	<td><%= taijuInfo.getResult() %></td>
-	</tr>
-	<% } %>
-	<% } %>
-</table>
 <hr>
 <a href="./Login">戻る</a>
-</form>
 </body>
 </html>

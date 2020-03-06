@@ -54,24 +54,25 @@ public class LoginServlet extends HttpServlet {
 		UserInfoLogic uLogic = new UserInfoLogic();
 		TaijukirokuLogic tLogic = new TaijukirokuLogic();
 		
-		String userNo = request.getParameter("userName");
+		request.setCharacterEncoding("utf-8");
+		
+		String userNo = request.getParameter("userNo");
 		UserInfo userInfo = uLogic.getUserInfo(Integer.valueOf(userNo));
 		
 		String nextView = null;
 		
 		if(userInfo == null) {
+			request.setAttribute("message", "ユーザ情報が存在しません。");
 			this.doGet(request, response);
 		} else {
 			List<TaijuInfo> taijuInfoList = tLogic.getTaijuInfoList(Integer.valueOf(userNo));
 			request.setAttribute("taijuInfoList", taijuInfoList);
 			nextView = "/WEB-INF/view/main/main.jsp";
 			request.setAttribute("userInfo", userInfo);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher(nextView);
+		    dispatcher.forward(request, response);
 		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(nextView);
-
-	    dispatcher.forward(request, response);
-		
 	}
 
 }
