@@ -13,6 +13,7 @@ import java.util.*;
 
 import taijukiroku.bean.TaijuInfo;
 import taijukiroku.bean.UserInfo;
+import taijukiroku.bean.UserList;
 import taijukiroku.logic.TaijukirokuLogic;
 import taijukiroku.logic.UserInfoLogic;
 
@@ -40,7 +41,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<UserInfo> list = uLogic.getUserInfoList();
-		request.setAttribute("userInfoList", list);
+		List<UserList> userList = this.createList(list);
+		request.setAttribute("userInfoList", userList);
 
 		String view = "/WEB-INF/view/login/login.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
@@ -54,8 +56,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
-		message = new ArrayList<>();
 		
+		message = new ArrayList<>();
 		String userNo = request.getParameter("userNo");
 		UserInfo userInfo = uLogic.getUserInfo(Integer.valueOf(userNo));
 		
@@ -76,4 +78,27 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
+	private List<UserList> createList(List<UserInfo> userInfoList) {
+		List<UserList> userList = new ArrayList<>();
+		Map<String,Integer> setUserMap = new HashMap<>();
+		int i = 0;
+		
+		for (UserInfo userInfo : userInfoList) {
+			UserList list = new UserList();
+			if(!setUserMap.containsKey(userInfo.getUserName())) {
+				list.setUserNo(userInfo.getUserNo());
+				list.setUserName(userInfo.getUserName());
+				list.setSameUserFlg(0);
+				userList.add(list);
+				setUserMap.put(userInfo.getUserName(),i);
+				i++;
+			} else {
+				list = userList.get(setUserMap.get(userInfo.getUserName()));
+				list.setUserNo(0);
+				list.setSameUserFlg(1);
+				userList.set(setUserMap.get(userInfo.getUserName()), list);
+			}
+		}
+		return userList;
+	}
 }

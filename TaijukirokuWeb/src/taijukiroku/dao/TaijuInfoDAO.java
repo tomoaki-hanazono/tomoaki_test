@@ -14,11 +14,11 @@ public class TaijuInfoDAO extends CommonDAO {
 			con = getConnection();
 			
 			// SQL文作成
-			String sql = "SELECT * FROM taijuinfo WHERE ";
-			sql += "user_no = " + String.valueOf(userNo);
+			String sql = "SELECT * FROM taijuinfo WHERE user_no = ?";
 			
 			// SQL作成
 			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, userNo);
 			
 			// SQL実行
 			ResultSet rs = st.executeQuery();
@@ -53,6 +53,50 @@ public class TaijuInfoDAO extends CommonDAO {
 		}
        
 		return list;
+	}
+	
+	public int countTaijuInfo(int userNo, String date) {
+		int count = 0;
+		
+		Connection con = null;
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT count(*) FROM taijuinfo WHERE user_no = ? AND date = ?";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, userNo);
+			st.setString(2, date);
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+	        // データをセット
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		return count;
 	}
 	
 	public void insert(TaijuInfo taijuInfo) throws Exception {

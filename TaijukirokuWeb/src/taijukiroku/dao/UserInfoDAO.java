@@ -105,6 +105,50 @@ public class UserInfoDAO extends CommonDAO {
 		return userInfo;
 	}
 	
+	public int countUserInfo(String userName, String birthday, String phoneNum) {
+		int count = 0;
+		Connection con = null;
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT count(*) FROM userinfo WHERE user_name = ? AND birthday = ? AND phone_num = ?";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, userName);
+			st.setString(2, birthday);
+			st.setString(3, phoneNum);
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+	        // データをセット
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		return count;
+	}
+	
 	public void insert(UserInfo userInfo) throws Exception {
 		Connection con = null;
 		try {

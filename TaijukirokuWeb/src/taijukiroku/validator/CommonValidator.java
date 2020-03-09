@@ -55,7 +55,7 @@ public class CommonValidator {
 		return true;
 	}
 	
-	public boolean isLengthOver(String value, int i) {
+	public boolean isLengthUnder(String value, int i) {
 		if(value.length() > i) {
 			return false;
 		}		
@@ -68,6 +68,10 @@ public class CommonValidator {
 		if (value.indexOf(".") < 0) {
 			i = 3;
 		}		
-		return this.isNumber(s) && this.isLengthOver(s,i);
+		return this.isNumber(s) && this.isLengthUnder(s,i);
+	}
+	
+	public boolean isPhoneNum(String phoneNum) {
+		return this.isNumber(phoneNum) && this.isLengthUnder(phoneNum, 11);
 	}
 }

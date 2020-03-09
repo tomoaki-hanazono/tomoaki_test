@@ -1,11 +1,12 @@
 package taijukiroku.logic;
 
-import java.sql.SQLException;
 import java.util.*;
 import taijukiroku.bean.UserInfo;
 import taijukiroku.dao.UserInfoDAO;
 
 public class UserInfoLogic {
+	
+	private UserInfoDAO dao = new UserInfoDAO();
 	
 	/**
 	 * ユーザ情報全件取得処理.
@@ -18,7 +19,6 @@ public class UserInfoLogic {
 		List<UserInfo> userInfoList = new ArrayList<>();
 		
 		try {
-			UserInfoDAO dao = new UserInfoDAO();
 			
 			userInfoList = dao.selectAll();
 			
@@ -27,6 +27,18 @@ public class UserInfoLogic {
 		}
 		
 		return userInfoList;
+	}
+	
+	public int countUserInfo(String userName, String birthday, String phoneNum) {
+		int count = 0;
+		
+		try {
+			count = dao.countUserInfo(userName, birthday, phoneNum);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
 	}
 	
 	/**
@@ -41,7 +53,6 @@ public class UserInfoLogic {
 		UserInfo userInfo = new UserInfo();
 		
 		try {
-			UserInfoDAO dao = new UserInfoDAO();
 			
 			userInfo = dao.select(userNo);
 			

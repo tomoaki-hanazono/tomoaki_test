@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+<%  List<String> messageList = (List<String>)request.getAttribute("message"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +9,18 @@
 <title>新規ユーザ登録</title>
 </head>
 <body>
+<% if (messageList != null && messageList.size() > 0) { %>
+<% for (String message : messageList) { %>
+<p style="color:red"><%= message %></p>
+<% } %>
+<hr>
+<% } %>
 <form method="post" action="./userRegist">
 	名前
 	<input type="text" name="userName">
 	<br>
 	生年月日
-	<select name="yaer">
+	<select name="year">
 		<option value="1921">1921</option>
 		<option value="1931">1931</option>
 		<option value="1941">1941</option>

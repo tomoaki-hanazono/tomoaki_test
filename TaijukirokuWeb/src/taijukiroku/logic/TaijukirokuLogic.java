@@ -5,13 +5,14 @@ import taijukiroku.bean.TaijuInfo;
 import taijukiroku.dao.TaijuInfoDAO;
 
 public class TaijukirokuLogic {
+	
+	private TaijuInfoDAO dao = new TaijuInfoDAO();
 
 	public List<TaijuInfo> getTaijuInfoList(int userNo) {
 		List<TaijuInfo> taijuInfoList = new ArrayList<>();
 		
 		try {
-			TaijuInfoDAO dao = new TaijuInfoDAO();
-			
+
 			taijuInfoList = dao.selectForUserNo(userNo);
 			
 		}catch(Exception e){
@@ -21,9 +22,20 @@ public class TaijukirokuLogic {
 		return taijuInfoList;
 	}
 	
+	public int countTaijuInfo(int userNo, String date) {
+		int count = 0;
+		
+		try {
+			count = dao.countTaijuInfo(userNo, date);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+	
 	public void registTaijuInfo(TaijuInfo taijuInfo) {
 		try {
-			TaijuInfoDAO dao = new TaijuInfoDAO();
 			
 			dao.insert(taijuInfo);
 			
