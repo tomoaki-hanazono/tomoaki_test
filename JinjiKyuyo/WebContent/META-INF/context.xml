@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context>
+  <Resource
+      name="jdbc/JINJIKYUYO"
+      auth="Container"
+      type="javax.sql.DataSource"
+      url="jdbc:mysql://localhost:3306/JINJIKYUYO"
+      connectionProperties="characterEncoding=UTF-8;serverTimezone=JST;"
+      username="jinji_user"
+      password="jinji_user"
+      validationQuery="select 1"/>
+ </Context>
