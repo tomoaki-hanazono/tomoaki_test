@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/registJs.js"></script>
 <meta charset="UTF-8">
 <title>住所録登録</title>
 </head>
@@ -15,35 +17,30 @@
 <% } %>
 <hr>
 <% } %>
-<form method="post" action="/JinjiKyuyo/addressbook/regist">
-<table>
+<form method="post" action="/JinjiKyuyo/addressbook/regist" >
+<table class="addressInputAria">
 	<tr id="nameAria">
 		<th>氏名</th>
-		<td><input type="text" name="familyName"></td>
-		<td><input type="text" name="firstName"></td>
+		<td>
+			<input type="text" name="familyName" class="nameAria" placeholder="姓">
+			<input type="text" name="firstName" class="nameAria" placeholder="名">
+		</td>
 	</tr>
 	<tr id="kanaAria">
 		<th>フリガナ</th>
-		<td><input type="text" name="kana1"></td>
-		<td><input type="text" name="kana2"></td>
+		<td>
+			<input type="text" name="kana1" class="nameAria" placeholder="セイ">
+			<input type="text" name="kana2" class="nameAria" placeholder="メイ">
+		</td>
 	</tr>
 	<tr id="birthdayAria">
 		<th>生年月日</th>
 		<td>
-			<select name="year">
-				<option value="1921">1921</option>
-				<option value="1931">1931</option>
-				<option value="1941">1941</option>
-				<option value="1951">1951</option>
-				<option value="1961">1961</option>
-				<option value="1971">1971</option>
-				<option value="1981">1981</option>
-				<option value="1991">1991</option>
-				<option value="2001">2001</option>
-				<option value="2019">2019</option>
-				<option value="2020">2020</option>
+			<select name="year" id="year">
+				<option value=""></option>
 			</select>年
-			<select name="month">
+			<select name="month" id="month">
+				<option value=""></option>
 				<option value="01">1</option>
 				<option value="02">2</option>
 				<option value="03">3</option>
@@ -57,7 +54,8 @@
 				<option value="11">11</option>
 				<option value="12">12</option>
 			</select>月
-			<select name="day">
+			<select name="day" id="day">
+				<option value=""></option>
 				<option value="01">1</option>
 				<option value="02">2</option>
 				<option value="03">3</option>
@@ -94,23 +92,23 @@
 	</tr>
 	<tr id="zipCodeAria">
 		<th>郵便番号</th>
-		<td><input type="text" name="zipCode"></td>
+		<td><input type="text" name="zipCode" class="numberAria" maxlength="7" onInput="checkNumber(this)"></td>
 	</tr>
 	<tr id="address1Aria">
 		<th>住所1</th>
-		<td><input type="text" name="address1"></td>
+		<td><input type="text" name="address1" placeholder="都道府県・市区町村・町名"></td>
 	</tr>
 	<tr id="address2Aria">
 		<th>住所2</th>
-		<td><input type="text" name="address2"></td>
+		<td><input type="text" name="address2" placeholder="番地・建物名"></td>
 	</tr>
 	<tr id="phoneNumberAria">
 		<th>固定電話番号</th>
-		<td><input type="text" name="phoneNumber"></td>
+		<td><input type="text" name="phoneNumber" class="numberAria" maxlength="10" onInput="checkNumber(this)"></td>
 	</tr>
 	<tr id="mobileNumberAria">
 		<th>携帯電話番号</th>
-		<td><input type="text" name="mobileNumber"></td>
+		<td><input type="text" name="mobileNumber" class="numberAria" maxlength="11" onInput="checkNumber(this)"></td>
 	</tr>
 	<tr id="mailAddressAria">
 		<th>メールアドレス</th>
@@ -137,8 +135,10 @@
 		<td><input type="text" name="remarks"></td>
 	</tr>
 </table>
-<input type="submit" name="regist" value="登録">
+<div class="center">
+<input type="submit" name="regist" value="登録" class="button">
+<a href="/JinjiKyuyo" class="button">戻る</a>
+</div>
 </form>
-<a href="/JinjiKyuyo">戻る</a>
 </body>
 </html>

@@ -128,4 +128,57 @@ public class AddressBookDAO extends CommonDAO {
 		
 		return list;
 	}
+	
+	public int count(AddressBookBean request) {
+		int count = 0;
+		Connection con = null;
+		
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT count(*) FROM address_book WHERE ";
+			sql += "full_name = ?";
+			sql += "AND birthday = ?";
+			sql += "AND zip_code = ?";
+			sql += "AND address1 = ?";
+			sql += "AND address2 = ?";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, request.getFullName());
+			st.setString(2, request.getBirthday());
+			st.setString(3, request.getZipCode());
+			st.setString(4, request.getAddress1());
+			st.setString(5, request.getAddress2());
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+			// データをセット
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		return count;
+	}
 }

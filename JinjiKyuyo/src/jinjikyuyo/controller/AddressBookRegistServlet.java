@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jinjikyuyo.bean.AddressBookBean;
 import jinjikyuyo.logic.AddressBookLogic;
+import jinjikyuyo.validator.CommonValidator;
 
 /**
  * Servlet implementation class AddressBookRegistServlet
@@ -22,6 +23,7 @@ public class AddressBookRegistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	private AddressBookLogic logic = new AddressBookLogic();
+	private CommonValidator validator = new CommonValidator();
 	private List<String> message = new ArrayList<>();
 	
     /**
@@ -48,6 +50,7 @@ public class AddressBookRegistServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		message = new ArrayList<>();
+		int reslt = 0;
 		AddressBookBean addressBook = new AddressBookBean();
 		
 		String familyName = request.getParameter("familyName");
@@ -72,27 +75,83 @@ public class AddressBookRegistServlet extends HttpServlet {
 		String keishou = null;
 		String remarks = null;
 		
-		addressBook.setFullName(fullName);
-		addressBook.setFamilyName(familyName);
-		addressBook.setFirstName(firstName);
-		addressBook.setNameKana(nameKana);
-		addressBook.setBirthday(birthday);
-		addressBook.setZipCode(zipCode);
-		addressBook.setAddress1(address1);
-		addressBook.setAddress2(address2);
-		addressBook.setPhoneNumber(phoneNumber);
-		addressBook.setMobileNumber(mobileNumber);
-		addressBook.setMailAddress(mailAddress);
-		addressBook.setCompany(company);
-		addressBook.setDepartment(department);
-		addressBook.setPosition(position);
-		addressBook.setKeishou(keishou);
-		addressBook.setRemarks(remarks);
+		if (!validator.isRequired(familyName) || !validator.isRequired(firstName)) {
+			message.add("氏名の入力は必須です。");
+		}
 		
-		int reslt = logic.registAddressBook(addressBook);
+		if (!validator.isRequired(kana1) || !validator.isRequired(kana2)) {
+			message.add("フリガナは必須です。");
+		} else if (!validator.isZenkakuKana(kana1) || !validator.isZenkakuKana(kana2)) {
+			message.add("フリガナは全角カナで入力してください。");
+		}
 		
-		if (reslt > 0) {
-			message.add("登録完了しました。");
+		if (!validator.isRequired(year) || !validator.isRequired(month)
+				|| !validator.isRequired(day)) {
+			message.add("生年月日は必須です。");
+		} else if (!validator.isDate(birthday)) {
+			message.add("不正な日付が選択されています。");
+		} else if (!validator.isFuture(birthday)) {
+			message.add("未来の日付が選択されています。");
+		}
+			
+		if (!validator.isRequired(zipCode)) {
+			message.add("郵便番号は必須です。");
+		} else if (!validator.isNumber(zipCode) || !validator.isLength(zipCode, 7)) {
+			message.add("郵便番号は7桁の半角数値で入力してください。");
+		}
+		
+		if (!validator.isRequired(address1) || !validator.isRequired(address2)) {
+			message.add("住所は必須です。");
+		}
+		
+		if(!validator.isRequired(phoneNumber) && !validator.isRequired(mobileNumber)) {
+			message.add("電話番号は必須です。<br>固定電話番号と携帯電話番号のどちらかを入力してください。");
+		} else {
+
+			if (validator.isRequired(phoneNumber)) {
+				if (!validator.isNumber(phoneNumber) || !validator.isLength(phoneNumber, 10)) {
+					message.add("固定電話番号は10桁の半角数値で入力してください。");
+				}
+			}
+			
+			if (validator.isRequired(mobileNumber)) {
+				if (!validator.isNumber(mobileNumber) || !validator.isLength(mobileNumber, 11)) {
+					message.add("携帯電話番号は11桁の半角数値で入力してください。");
+				}
+			}
+		}
+		
+		if (validator.isRequired(mailAddress) && !validator.isMailAddress(mailAddress)) {
+			message.add("メールアドレスを正しく入力してください。");
+		}
+		
+		if (message.size() == 0) {
+			addressBook.setFullName(fullName);
+			addressBook.setFamilyName(familyName);
+			addressBook.setFirstName(firstName);
+			addressBook.setNameKana(nameKana);
+			addressBook.setBirthday(birthday);
+			addressBook.setZipCode(zipCode);
+			addressBook.setAddress1(address1);
+			addressBook.setAddress2(address2);
+			addressBook.setPhoneNumber(phoneNumber);
+			addressBook.setMobileNumber(mobileNumber);
+			addressBook.setMailAddress(mailAddress);
+			addressBook.setCompany(company);
+			addressBook.setDepartment(department);
+			addressBook.setPosition(position);
+			addressBook.setKeishou(keishou);
+			addressBook.setRemarks(remarks);
+			
+			if (logic.countAddressBook(addressBook) > 0) {
+				message.add("登録済みです。");
+			} else {
+				reslt = logic.registAddressBook(addressBook);
+				
+				if (reslt > 0) {
+					message.add("登録完了しました。");
+				}
+			}
 		}
 
 		request.setAttribute("message", message);

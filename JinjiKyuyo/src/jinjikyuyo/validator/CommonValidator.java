@@ -10,6 +10,12 @@ public class CommonValidator {
 	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 	Calendar nowCalendar = Calendar.getInstance();
 	static final String HANKAKU_SUJI = "^[0-9]*$";
+	static final String HANKAKU_EISU = "a-zA-Z0-9";
+	static final String HANKAKU_KIGO = "!#%&'/=_~`\\*\\+\\?\\{\\}\\^\\$\\-\\|";
+	static final String HANKAKU_EISUKIGO = "[" + HANKAKU_EISU + HANKAKU_KIGO + "]";
+	static final String DOMAIN = HANKAKU_EISUKIGO + "+" + "(\\." + HANKAKU_EISUKIGO + "+)*";
+	static final String MAIL_ADDRESS = "^" + DOMAIN + "@" + DOMAIN + "$";
+	static final String ZENKAKU_KANA = "^[\\u30A0-\\u30FF]+$";
 
 	public boolean isDate(String date) {
 		if(date == null || date.length() != 8) {
@@ -60,5 +66,17 @@ public class CommonValidator {
 			return false;
 		}		
 		return true;
+	}
+	
+	public boolean isMailAddress(String value) {
+		Pattern p = Pattern.compile(MAIL_ADDRESS);
+		Matcher m = p.matcher(value);
+		return m.find();
+	}
+	
+	public boolean isZenkakuKana(String value) {
+		Pattern p = Pattern.compile(ZENKAKU_KANA);
+		Matcher m = p.matcher(value);
+		return m.find();
 	}
 }

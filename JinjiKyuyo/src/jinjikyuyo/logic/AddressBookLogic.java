@@ -33,4 +33,16 @@ public class AddressBookLogic {
 		
 		return list;
 	}
+	
+	public int countAddressBook(AddressBookBean request) {
+		int count = 0;
+		
+		try {
+			count = dao.count(request);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
 }
