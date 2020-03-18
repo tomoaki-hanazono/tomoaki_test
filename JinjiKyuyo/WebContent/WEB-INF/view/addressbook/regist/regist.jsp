@@ -6,14 +6,14 @@
 <html>
 <head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/registJs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/addressbook/registJs.js"></script>
 <meta charset="UTF-8">
 <title>住所録登録</title>
 </head>
 <body>
 <% if (messageList != null && messageList.size() > 0) { %>
 <% for (String message : messageList) { %>
-<p style="color:red"><%= message %></p>
+<p class="errMessage"><%= message %></p>
 <% } %>
 <hr>
 <% } %>
@@ -114,23 +114,23 @@
 		<th>メールアドレス</th>
 		<td><input type="text" name="mailAddress"></td>
 	</tr>
-	<tr id="companyAria" style="display:none">
+	<tr id="companyAria" class="noDisplay">
 		<th>会社</th>
 		<td><input type="text" name="company"></td>
 	</tr>
-	<tr id="departmentAria" style="display:none">
+	<tr id="departmentAria" class="noDisplay">
 		<th>部署</th>
-		<td><input type="text" name="department"></td>
+		<td><input type="text" class="noDisplay"></td>
 	</tr>
-	<tr id="positionAria" style="display:none">
+	<tr id="positionAria" class="noDisplay">
 		<th>役職</th>
-		<td><input type="text" name="position"></td>
+		<td><input type="text" class="noDisplay"></td>
 	</tr>
-	<tr id="keishouAria" style="display:none">
+	<tr id="keishouAria" class="noDisplay">
 		<th>敬称</th>
 		<td><input type="text" name="keishou"></td>
 	</tr>
-	<tr id="remarksAria" style="display:none">
+	<tr id="remarksAria" class="noDisplay">
 		<th>備考</th>
 		<td><input type="text" name="remarks"></td>
 	</tr>

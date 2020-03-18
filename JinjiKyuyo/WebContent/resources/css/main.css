@@ -4,12 +4,19 @@
 	text-align: center;
 }
 
+.errMessage {
+	color: red;
+}
+.tableErr {
+	border-color: red;
+}
+
 table {
 	border: solid 3px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 50px;
-	border-collapse: collapse;	
+	border-collapse: collapse;
 }
 table th,td {
 	border: solid 1px;
@@ -34,14 +41,34 @@ table.addressListAria th.w2 {
 	width: 200px;
 }
 
+table.employeeListAria {
+	width: 600px;
+}
+table.employeeListAria th.w0 {
+	width: 20px;
+}
+table.employeeListAria th.w1 {
+	width: 120px;
+}
+table.employeeListAria th.w2 {
+	width: 200px;
+}
+
 input[type="text"] {
 	width: 100%;
 }
+input[type="text"][disabled], input[type="text"][readonly]{
+	border: none;
+	outline: none;
+	background-color: white;
+    color: black;
+    margin: 2px;
+}
 input.nameAria {
-	width:170px;
+	width: 170px;
 }
 input.numberAria {
-	width:100px;
+	width: 100px;
 }
 
 .button {
@@ -69,4 +96,8 @@ input.numberAria {
 	background-image: -webkit-linear-gradient(top, #dddddd, #f7f7f7);
 	background-image: linear-gradient(to bottom, #dddddd, #f7f7f7);
 	border-color: #a5a5a5;
+}
+
+.noDisplay {
+	display: none;
 }

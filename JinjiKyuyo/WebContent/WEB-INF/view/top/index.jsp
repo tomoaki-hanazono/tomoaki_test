@@ -12,6 +12,9 @@
 	<a href="./addressbook/regist" class="button">住所録登録</a>
 	<br>
 	<a href="./addressbook/list" class="button">住所録一覧</a>
+	<br>
+	<a href="./employmentInfo/employeeList" class="button">雇用情報</a>
+	<br>
 </div>
 </body>
 </html>
