@@ -26,7 +26,7 @@
 		<% for (AddressBookBean addressBook : addressBookList) { %>
 		<tr>
 			<td><input type="radio" name="employeeId" value="<%= addressBook.getEmployeeId() %>" onclick="checkRadio()"></td>
-			<td><input type="text" name="fullName_<%= addressBook.getEmployeeId() %>" value="<%= addressBook.getFullName() %>" readonly></td>
+			<td><input type="text" name="fullName_<%= addressBook.getEmployeeId() %>" value="<%= addressBook.getFullName() %>" class="nameAria" readonly></td>
 			<td>
 			<%= addressBook.getBirthday().substring(0,4) + "年"
 			    + addressBook.getBirthday().substring(4,6) + "月"

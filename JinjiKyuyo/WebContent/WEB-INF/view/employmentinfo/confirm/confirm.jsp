@@ -143,30 +143,30 @@
 			</tr>
 			<tr>
 				<th>基本給</th>
-				<td><input type="text" name="basicSalary" value="0" onInput="checkNumber(this)">円</td>
+				<td><input type="text" name="basicSalary" value="0" onInput="checkNumber(this)" class="moneyAria">円</td>
 			</tr>
 			<tr>
 				<th>職務手当</th>
-				<td><input type="text" name="dutiesAllowance" value="0" onInput="checkNumber(this)">円</td>
+				<td><input type="text" name="dutiesAllowance" value="0" onInput="checkNumber(this)" class="moneyAria">円</td>
 			</tr>
 			<tr>
 				<th>通勤手当</th>
-				<td><input type="text" name="commutingAllowance" value="0" onInput="checkNumber(this)">円</td>
+				<td><input type="text" name="commutingAllowance" value="0" onInput="checkNumber(this)" class="moneyAria">円</td>
 			</tr>
 			<tr>
 				<th>時間外手当</th>
-				<td><input type="text" name="overtimeAllowance" value="0" onInput="checkNumber(this)">円</td>
+				<td><input type="text" name="overtimeAllowance" value="0" onInput="checkNumber(this)" class="moneyAria">円</td>
 			</tr>
 			<tr>
 				<th>その他手当</th>
-				<td><input type="text" name="otherAllowance" value="0" onInput="checkNumber(this)">円</td>
+				<td><input type="text" name="otherAllowance" value="0" onInput="checkNumber(this)" class="moneyAria">円</td>
 			</tr>
 			<tr>
 				<th>基準時間</th>
 				<td>
-					<input type="text" name="lowerLimit" value="0" onInput="checkNumber(this)">h〜<input type="text" name="upperLimit" value="0" onInput="checkNumber(this)">h<br>
-					超過:<input type="text" name="excessMoney" value="0" onInput="checkNumber(this)">円<br>
-					控除:<input type="text" name="eductionMoney" value="0" onInput="checkNumber(this)">円
+					<input type="text" name="lowerLimit" value="0" onInput="checkNumber(this)" class="timeAria">h〜<input type="text" name="upperLimit" value="0" onInput="checkNumber(this)" class="timeAria">h<br>
+					超過:<input type="text" name="excessMoney" value="0" onInput="checkNumber(this)" class="moneyAria">円<br>
+					控除:<input type="text" name="eductionMoney" value="0" onInput="checkNumber(this)" class="moneyAria">円
 				</td>
 			</tr>
 			<tr class="noDisplay">
@@ -201,19 +201,17 @@
 							+ employment.getEmploymentPeriodEnd().substring(4,6) + "月"
 							+ employment.getEmploymentPeriodEnd().substring(6,8) + "日" %>
 					</td>
-					<td><input type="text" id="lowerLimit_<%= employment.getEmploymentId() %>" name="lowerLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getLowerLimit() %>" onInput="checkNumber(this)" disabled="disabled">
-						h 〜
-						<input type="text" id="upperLimit_<%= employment.getEmploymentId() %>" name="upperLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getUpperLimit() %>" onInput="checkNumber(this)" disabled="disabled">h</td>
-					<td><input type="text" id="excessMoney_<%= employment.getEmploymentId() %>" name="excessMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getExcessMoney() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
-					<td><input type="text" id="eductionMoney_<%= employment.getEmploymentId() %>" name="eductionMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getEductionMoney() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
+					<td><input type="text" id="lowerLimit_<%= employment.getEmploymentId() %>" name="lowerLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getLowerLimit() %>" onInput="checkNumber(this)" class="timeAria" disabled="disabled">h〜<input type="text" id="upperLimit_<%= employment.getEmploymentId() %>" name="upperLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getUpperLimit() %>" onInput="checkNumber(this)" class="timeAria" disabled="disabled">h</td>
+					<td><input type="text" id="excessMoney_<%= employment.getEmploymentId() %>" name="excessMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getExcessMoney() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+					<td><input type="text" id="eductionMoney_<%= employment.getEmploymentId() %>" name="eductionMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getEductionMoney() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
 				</tr>
 				<tr><th class="w1">基本給</th><th class="w1">職務手当</th><th class="w1">通勤手当</th><th class="w2">時間外手当</th><th class="w2">その他手当</th></tr>
 				<tr>
-					<td><input type="text" id="basicSalary_<%= employment.getEmploymentId() %>" name="basicSalary_<%= employment.getEmploymentId() %>" value="<%= employment.getBasicSalary() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
-					<td><input type="text" id="dutiesAllowance_<%= employment.getEmploymentId() %>" name="dutiesAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getDutiesAllowance() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
-					<td><input type="text" id="commutingAllowance_<%= employment.getEmploymentId() %>" name="commutingAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getCommutingAllowance() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
-					<td><input type="text" id="overtimeAllowance_<%= employment.getEmploymentId() %>" name="overtimeAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOvertimeAllowance() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
-					<td><input type="text" id="otherAllowance_<%= employment.getEmploymentId() %>" name="otherAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOtherAllowance() %>" onInput="checkNumber(this)" disabled="disabled">円</td>
+					<td><input type="text" id="basicSalary_<%= employment.getEmploymentId() %>" name="basicSalary_<%= employment.getEmploymentId() %>" value="<%= employment.getBasicSalary() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+					<td><input type="text" id="dutiesAllowance_<%= employment.getEmploymentId() %>" name="dutiesAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getDutiesAllowance() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+					<td><input type="text" id="commutingAllowance_<%= employment.getEmploymentId() %>" name="commutingAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getCommutingAllowance() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+					<td><input type="text" id="overtimeAllowance_<%= employment.getEmploymentId() %>" name="overtimeAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOvertimeAllowance() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+					<td><input type="text" id="otherAllowance_<%= employment.getEmploymentId() %>" name="otherAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOtherAllowance() %>" onInput="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
 				</tr>
 			</table>
 			<div id="employmentInfoHiddenAria_<%= employment.getEmploymentId() %>">

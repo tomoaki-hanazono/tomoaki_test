@@ -54,6 +54,10 @@ table.employeeListAria th.w2 {
 	width: 200px;
 }
 
+table.employeeListAria input.nameAria {
+	width: 100px;
+}
+
 input[type="text"] {
 	width: 100%;
 }
@@ -69,6 +73,14 @@ input.nameAria {
 }
 input.numberAria {
 	width: 100px;
+}
+input.moneyAria {
+	width: 100px;
+	text-align: right;
+}
+input.timeAria {
+	width: 30px;
+	text-align: right;
 }
 
 .button {
