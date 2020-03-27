@@ -16,6 +16,10 @@
 <title>給与情報一覧</title>
 </head>
 <body>
+<div class="center">
+	<h1>給与情報一覧</h1>
+	<hr>
+</div>
 <div id="messageAria">
 	<% if (messageList != null && messageList.size() > 0) { %>
 	<% for (String message : messageList) { %>
@@ -89,6 +93,6 @@
 		<h2 style="color:red">給与情報が存在しません。</h2>
 		<hr>
 <% } %>
-<a href="/JinjiKyuyo/salaryInfo/employeeList" class="button">戻る</a>
+<a href="/JinjiKyuyo/employee/list" class="button">戻る</a>
 </body>
 </html>

@@ -15,7 +15,7 @@ table {
 	border: solid 3px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 	border-collapse: collapse;
 }
 table th,td {
@@ -42,7 +42,7 @@ table.addressListAria th.w2 {
 }
 
 table.employeeListAria {
-	width: 600px;
+	width: 1200px;
 }
 table.employeeListAria th.w0 {
 	width: 20px;
@@ -65,8 +65,8 @@ input[type="text"][disabled], input[type="text"][readonly]{
 	border: none;
 	outline: none;
 	background-color: white;
-    color: black;
-    margin: 2px;
+	color: black;
+	margin: 2px;
 }
 input.nameAria {
 	width: 170px;
@@ -84,6 +84,7 @@ input.timeAria {
 }
 
 .button {
+	margin: 5px 0px;
 	cursor: default;
 	display: inline-block;
 	padding: 2.5px 7px;
@@ -98,7 +99,6 @@ input.timeAria {
 	background-image: linear-gradient(to bottom, #f7f7f7, #dddddd);
 	color: buttontext;
 	font: 400 13.3333px Arial;
-	
 }
 .button:hover {
 	border-color: #757575;
@@ -108,6 +108,10 @@ input.timeAria {
 	background-image: -webkit-linear-gradient(top, #dddddd, #f7f7f7);
 	background-image: linear-gradient(to bottom, #dddddd, #f7f7f7);
 	border-color: #a5a5a5;
+}
+.button:disabled {
+	color: #ccc;
+	border-color: #ccc;
 }
 
 .noDisplay {

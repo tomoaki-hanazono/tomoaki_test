@@ -37,6 +37,10 @@
 <title>稼働時間入力</title>
 </head>
 <body>
+<div class="center">
+	<h1>稼働時間入力</h1>
+	<hr>
+</div>
 <div id="messageAria">
 	<% if (messageList != null && messageList.size() > 0) { %>
 	<% for (String message : messageList) { %>
@@ -139,6 +143,6 @@
 </form>
 <% } %>
 <br>
-<a href="/JinjiKyuyo/operatingTime/employeeList" class="button">戻る</a>
+<a href="/JinjiKyuyo/employee/list" class="button">戻る</a>
 </body>
 </html>

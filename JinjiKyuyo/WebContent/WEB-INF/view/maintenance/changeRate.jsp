@@ -22,6 +22,10 @@
 <title>保険料率変更</title>
 </head>
 <body>
+<div class="center">
+	<h1>保険料率変更</h1>
+	<hr>
+</div>
 <div id="messageAria">
 	<% if (messageList != null && messageList.size() > 0) { %>
 	<% for (String message : messageList) { %>

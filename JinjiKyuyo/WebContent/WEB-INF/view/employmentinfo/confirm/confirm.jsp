@@ -16,6 +16,10 @@
 <title>雇用情報</title>
 </head>
 <body>
+<div class="center">
+	<h1>雇用情報</h1>
+	<hr>
+</div>
 <div id="messageAria">
 	<% if (messageList != null && messageList.size() > 0) { %>
 	<% for (String message : messageList) { %>
@@ -179,8 +183,8 @@
 				<td><input type="text" name="remarks"></td>
 			</tr>
 		</table>
-		
 		<input type="submit" name="addEmployment" value="登録" class="button">
+		<hr>
 	</div>
 </form>
 <form method="post" action="/JinjiKyuyo/employmentInfo/confirm" class="center" onsubmit="return checkDefault()">
@@ -233,7 +237,7 @@
 		<hr>
 	<% } %>
 	<input type="submit" id="update" name="update" value="修正" class="button" disabled="disabled">
-	<a href="/JinjiKyuyo/employmentInfo/employeeList" class="button">戻る</a>
+	<a href="/JinjiKyuyo/employee/list" class="button">戻る</a>
 </form>
 
 </body>

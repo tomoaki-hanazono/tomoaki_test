@@ -9,9 +9,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/addressbook/registJs.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 <meta charset="UTF-8">
-<title>住所録登録</title>
+<title>社員情報登録</title>
 </head>
 <body>
+<div class="center">
+	<h1>社員情報登録</h1>
+	<hr>
+</div>
 <% if (messageList != null && messageList.size() > 0) { %>
 <% for (String message : messageList) { %>
 <p class="errMessage"><%= message %></p>
@@ -138,7 +142,7 @@
 </table>
 <div class="center">
 <input type="submit" name="regist" value="登録" class="button">
-<a href="/JinjiKyuyo" class="button">戻る</a>
+<a href="/JinjiKyuyo/employee/list" class="button">戻る</a>
 </div>
 </form>
 </body>
