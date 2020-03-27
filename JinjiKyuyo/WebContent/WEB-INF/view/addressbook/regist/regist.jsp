@@ -7,6 +7,7 @@
 <head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/addressbook/registJs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 <meta charset="UTF-8">
 <title>住所録登録</title>
 </head>
@@ -92,7 +93,7 @@
 	</tr>
 	<tr id="zipCodeAria">
 		<th>郵便番号</th>
-		<td><input type="text" name="zipCode" class="numberAria" maxlength="7" onInput="checkNumber(this)"></td>
+		<td><input type="text" name="zipCode" class="numberAria" maxlength="7" onChange="checkNum(this)"></td>
 	</tr>
 	<tr id="address1Aria">
 		<th>住所1</th>
@@ -104,11 +105,11 @@
 	</tr>
 	<tr id="phoneNumberAria">
 		<th>固定電話番号</th>
-		<td><input type="text" name="phoneNumber" class="numberAria" maxlength="10" onInput="checkNumber(this)"></td>
+		<td><input type="text" name="phoneNumber" class="numberAria" maxlength="10" onChange="checkNum(this)"></td>
 	</tr>
 	<tr id="mobileNumberAria">
 		<th>携帯電話番号</th>
-		<td><input type="text" name="mobileNumber" class="numberAria" maxlength="11" onInput="checkNumber(this)"></td>
+		<td><input type="text" name="mobileNumber" class="numberAria" maxlength="11" onChange="checkNum(this)"></td>
 	</tr>
 	<tr id="mailAddressAria">
 		<th>メールアドレス</th>

@@ -19,7 +19,7 @@
 	<br>
 	<a href="./salaryInfo/employeeList" class="button">給与情報</a>
 	<br>
-	<!-- <a href="./insurancePremiumRate/modify" class="button">保険料率変更</a>  -->
+	<a href="./maintenance/changeRate" class="button">保険料率変更</a>
 	<br>
 </div>
 </body>

@@ -1,6 +1,8 @@
 package jinjikyuyo.logic;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jinjikyuyo.bean.InsurancePremiumRateBean;
 import jinjikyuyo.dao.InsurancePremiumRateDAO;
@@ -9,6 +11,18 @@ public class InsurancePremiumRateLogic {
 	
 	private InsurancePremiumRateDAO dao = new InsurancePremiumRateDAO();
 	private static final String EMPLOYMENT_INSURANCE_ID = "employment_insurance";
+	
+	public Map<String, InsurancePremiumRateBean> getInsurancePremiumRateAll() {
+		Map<String, InsurancePremiumRateBean> reslt = new HashMap<>();
+		
+		try {
+			reslt = dao.selectAll();
+		} catch(Exception e) {
+			e.getStackTrace();
+		}
+		
+		return reslt;
+	}
 	
 	public double getInsurancePremiumRate(String insuranceId) {
 		double insurancePremiumRate = 0;

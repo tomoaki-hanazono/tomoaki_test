@@ -32,6 +32,7 @@
 <head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/operatingtime/inputJs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/common.js"></script>
 <meta charset="UTF-8">
 <title>稼働時間入力</title>
 </head>

@@ -4,12 +4,61 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import jinjikyuyo.bean.EmploymentBean;
 import jinjikyuyo.bean.InsurancePremiumRateBean;
 
 public class InsurancePremiumRateDAO extends CommonDAO {
+	
+	public Map<String, InsurancePremiumRateBean> selectAll() {
+		Map<String, InsurancePremiumRateBean> reslt = new HashMap<>();
+		Connection con = null;
+		
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT * FROM insurance_premium_rate";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+	        // データをセット
+			while (rs.next()) {
+				InsurancePremiumRateBean insurancePremiumRate = new InsurancePremiumRateBean();
+				insurancePremiumRate.setInsuranceId(rs.getString("insurance_id"));
+				insurancePremiumRate.setInsuranceName(rs.getString("insurance_name"));
+				insurancePremiumRate.setInsurancePremiumRate1(rs.getInt("insurance_premium_rate_1"));
+				insurancePremiumRate.setInsurancePremiumRate2(rs.getInt("insurance_premium_rate_2"));
+				reslt.put(rs.getString("insurance_id"), insurancePremiumRate);
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		return reslt;
+	}
 	
 	public InsurancePremiumRateBean selectInsurancePremiumRateForInsuranceId(String insuranceId) {
 		InsurancePremiumRateBean reslt = new InsurancePremiumRateBean();
