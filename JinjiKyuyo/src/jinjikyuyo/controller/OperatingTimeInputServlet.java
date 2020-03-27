@@ -46,7 +46,8 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		
 		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
 		String employeeName = request.getParameter("fullName_" + employeeId);
-		String birthday = request.getParameter("birthday_" + employeeId); 
+		String birthday = request.getParameter("birthday_" + employeeId);
+		String dependents = request.getParameter("dependents_" + employeeId);
 		
 		if (request.getAttribute("employeeId") == null || request.getAttribute("employeeId").equals("")) {
 			request.setAttribute("employeeId", employeeId);
@@ -56,6 +57,9 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		}
 		if (request.getAttribute("birthday") == null || request.getAttribute("birthday").equals("") ) {
 			request.setAttribute("birthday", birthday);
+		}
+		if (request.getAttribute("dependents") == null || request.getAttribute("dependents").equals("") ) {
+			request.setAttribute("dependents", dependents);
 		}
 		
 		request.setAttribute("message", message);
@@ -77,6 +81,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		String employeeName = request.getParameter("employeeName");
 		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
 		String birthday = request.getParameter("birthday");
+		String dependents = request.getParameter("dependents");
 		
 		// 社員名
 		request.setAttribute("employeeName", employeeName);
@@ -84,6 +89,8 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		request.setAttribute("employeeId", employeeId);
 		// 生年月日
 		request.setAttribute("birthday", birthday);
+		// 扶養家族
+		request.setAttribute("dependents", dependents);
 		
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
@@ -134,7 +141,6 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				int employmentInsurance = 0;
 				int totalDeduction = 0;
 				int otherPayment = 0;
-				String support = "0";
 				int payment = 0;
 				int incomeTax = 0;
 				int totalInsurance = 0;
@@ -152,7 +158,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration);
 				totalInsurance = healthInsurance + employeePension + employmentInsurance;
 				otherPayment = totalPayment - totalInsurance - shortageDeduction;
-				incomeTax = iLogic.getIncomeTax(otherPayment, support);
+				incomeTax = iLogic.getIncomeTax(otherPayment, dependents);
 				totalDeduction = totalInsurance + shortageDeduction + incomeTax;
 				payment = otherPayment - incomeTax;
 				

@@ -18,6 +18,7 @@ public class AddressBookBean implements java.io.Serializable {
 	private String position;
 	private String keishou;
 	private String remarks;
+	private String dependents;
 	
 	public int getEmployeeId() {
 		return employeeId;
@@ -120,6 +121,12 @@ public class AddressBookBean implements java.io.Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getDependents() {
+		return dependents;
+	}
+	public void setDependents(String dependents) {
+		this.dependents = dependents;
 	}
 
 }

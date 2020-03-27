@@ -74,6 +74,7 @@ public class AddressBookRegistServlet extends HttpServlet {
 		String position = null;
 		String keishou = null;
 		String remarks = null;
+		String dependents = request.getParameter("dependents");
 		
 		if (!validator.isRequired(familyName) || !validator.isRequired(firstName)) {
 			message.add("氏名の入力は必須です。");
@@ -125,6 +126,10 @@ public class AddressBookRegistServlet extends HttpServlet {
 			message.add("メールアドレスを正しく入力してください。");
 		}
 		
+		if (!validator.isRequired(dependents)) {
+			message.add("扶養家族は必須です。");
+		}
+		
 		if (message.size() == 0) {
 			addressBook.setFullName(fullName);
 			addressBook.setFamilyName(familyName);
@@ -142,6 +147,7 @@ public class AddressBookRegistServlet extends HttpServlet {
 			addressBook.setPosition(position);
 			addressBook.setKeishou(keishou);
 			addressBook.setRemarks(remarks);
+			addressBook.setDependents(dependents);
 			
 			if (logic.countAddressBook(addressBook) > 0) {
 				message.add("登録済みです。");

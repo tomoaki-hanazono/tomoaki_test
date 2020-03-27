@@ -5,6 +5,7 @@
 <%  int employeeId = (int)request.getAttribute("employeeId"); %>
 <%  String birthday = (String)request.getAttribute("birthday"); %>
 <%  String employeeName = (String)request.getAttribute("employeeName"); %>
+<%  String dependents = (String)request.getAttribute("dependents"); %>
 <%  String year = (String)request.getAttribute("year"); %>
 <%  String month = (String)request.getAttribute("month"); %>
 <%  String lowerLimit = (String)request.getAttribute("lowerLimit"); %>
@@ -53,6 +54,7 @@
 	<input type="text" name="employeeName" value="<%= employeeName %>" class="nameAria" readonly><br>
 	<input type="hidden" name="employeeId" value="<%= employeeId %>">
 	<input type="hidden" name="birthday" value="<%= birthday %>">
+	<input type="hidden" name="dependents" value="<%= dependents %>">
 	稼働月：<select name="year" id="year">
 		<option value=""></option>
 	</select>年
@@ -85,6 +87,7 @@
 <input type="hidden" name="employeeName" value="<%= employeeName %>"><br>
 <input type="hidden" name="employeeId" value="<%= employeeId %>">
 <input type="hidden" name="birthday" value="<%= birthday %>">
+<input type="hidden" name="dependents" value="<%= dependents %>">
 稼働月：<input type="text" name="year" value="<%= year %>" class="numberAria" readonly>年<input type="text" name="month" value="<%= month %>" class="numberAria" readonly>月
 <table>
 	<tr>

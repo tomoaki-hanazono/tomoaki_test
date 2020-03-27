@@ -139,6 +139,21 @@
 		<th>備考</th>
 		<td><input type="text" name="remarks"></td>
 	</tr>
+	<tr id="dependentsAria">
+		<th>扶養家族</th>
+		<td>
+			<select name="dependents" id="dependents">
+				<option value="0">0人</option>
+				<option value="1">1人</option>
+				<option value="2">2人</option>
+				<option value="3">3人</option>
+				<option value="4">4人</option>
+				<option value="5">5人</option>
+				<option value="6">6人</option>
+				<option value="7">7人</option>
+			</select>
+		</td>
+	</tr>
 </table>
 <div class="center">
 <input type="submit" name="regist" value="登録" class="button">

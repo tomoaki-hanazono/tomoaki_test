@@ -23,7 +23,7 @@ public class AddressBookDAO extends CommonDAO {
 			con.setAutoCommit(false);
 			
 			// SQL文作成
-			String sql = "insert into address_book values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into address_book values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			// SQL作成
 			PreparedStatement st = con.prepareStatement(sql);
@@ -43,6 +43,7 @@ public class AddressBookDAO extends CommonDAO {
 			st.setString(14, request.getPosition());
 			st.setString(15, request.getKeishou());
 			st.setString(16, request.getRemarks());
+			st.setString(17, request.getDependents());
 			
 			// SQL実行
 			reslt = st.executeUpdate();
@@ -106,6 +107,7 @@ public class AddressBookDAO extends CommonDAO {
 				addressbook.setPosition(rs.getString("position"));
 				addressbook.setKeishou(rs.getString("keishou"));
 				addressbook.setRemarks(rs.getString("remarks"));
+				addressbook.setDependents(rs.getString("dependents"));
 				list.add(addressbook);
 			}
 			
