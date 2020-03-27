@@ -15,6 +15,12 @@
 	<br>
 	<a href="./employmentInfo/employeeList" class="button">雇用情報</a>
 	<br>
+	<a href="./operatingTime/employeeList" class="button">稼働時間入力</a>
+	<br>
+	<a href="./salaryInfo/employeeList" class="button">給与情報</a>
+	<br>
+	<!-- <a href="./insurancePremiumRate/modify" class="button">保険料率変更</a>  -->
+	<br>
 </div>
 </body>
 </html>

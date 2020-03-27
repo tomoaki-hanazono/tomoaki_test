@@ -70,6 +70,70 @@ public class EmploymentDAO extends CommonDAO {
 		
 		return list;
 	}
+	
+	public EmploymentBean selectForEmploymentPeriod(int employeeId, String employmentPeriod) {
+		EmploymentBean reslt = new EmploymentBean();
+		Connection con = null;
+		
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT * FROM employment WHERE employee_id = ?"
+					+ " AND employment_period_start <= ?"
+					+ " AND employment_period_end > ?"
+					+ " ORDER BY employment_period_start DESC";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, employeeId);
+			st.setString(2, employmentPeriod);
+			st.setString(3, employmentPeriod);
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+	        // データをセット
+			while (rs.next()) {
+				reslt.setEmploymentId(rs.getInt("employment_id"));
+				reslt.setEmployeeId(rs.getInt("employee_id"));
+				reslt.setEmployeeName(rs.getString("employee_name"));
+				reslt.setEmploymentPeriodStart(rs.getString("employment_period_start"));
+				reslt.setEmploymentPeriodEnd(rs.getString("employment_period_end"));
+				reslt.setBasicSalary(rs.getInt("basic_salary"));
+				reslt.setDutiesAllowance(rs.getInt("duties_allowance"));
+				reslt.setCommutingAllowance(rs.getInt("commuting_allowance"));
+				reslt.setOvertimeAllowance(rs.getInt("overtime_allowance"));
+				reslt.setOtherAllowance(rs.getInt("other_allowance"));
+				reslt.setExcessMoney(rs.getInt("excess_money"));
+				reslt.setEductionMoney(rs.getInt("eduction_money"));
+				reslt.setLowerLimit(rs.getInt("lower_limit"));
+				reslt.setUpperLimit(rs.getInt("upper_limit"));
+				reslt.setJobDescription(rs.getString("job_description"));
+				reslt.setRemarks(rs.getString("remarks"));
+				break;
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		return reslt;
+	}
 
 	public int insert(EmploymentBean request) throws Exception {
 		Connection con = null;

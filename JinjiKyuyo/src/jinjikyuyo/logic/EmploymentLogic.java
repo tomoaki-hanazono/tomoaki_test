@@ -22,6 +22,18 @@ public class EmploymentLogic {
 		return list;
 	}
 	
+	public EmploymentBean getEmploymentInfo(int employeeId, String employmentPeriod) {
+		EmploymentBean reslt = new EmploymentBean();
+		
+		try {
+			reslt = dao.selectForEmploymentPeriod(employeeId, employmentPeriod);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return reslt;
+	}
+	
 	public int registEmploymentInfo(EmploymentBean request) {
 		int reslt = 0;
 		

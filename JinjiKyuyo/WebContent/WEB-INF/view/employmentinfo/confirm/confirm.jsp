@@ -26,7 +26,7 @@
 <form method="post" action="/JinjiKyuyo/employmentInfo/confirm" class="center">
 	<input type="hidden" name="type" value="add">
 	<input type="hidden" name="employeeId" value="<%= employeeId %>">
-	<input type="text" name="employeeName" value="<%= employeeName %>" readonly>
+	<input type="text" name="employeeName" value="<%= employeeName %>" class="numberAria" readonly>
 	
 	<input type="button" name="addEmployment" value="雇用情報追加" class="button" onClick="changeAria()">
 	<div id="addEmploymentAria" class="noDisplay">
