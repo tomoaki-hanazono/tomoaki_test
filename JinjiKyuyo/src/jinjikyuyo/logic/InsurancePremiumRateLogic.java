@@ -24,12 +24,12 @@ public class InsurancePremiumRateLogic {
 		return reslt;
 	}
 	
-	public double getInsurancePremiumRate(String insuranceId) {
+	public double getInsurancePremiumRate(String insuranceId, String targetDate) {
 		double insurancePremiumRate = 0;
 		InsurancePremiumRateBean reslt = new InsurancePremiumRateBean();
 		
 		try {
-			reslt = dao.selectInsurancePremiumRateForInsuranceId(insuranceId);
+			reslt = dao.selectInsurancePremiumRateForInsuranceId(insuranceId,targetDate);
 			
 			if(EMPLOYMENT_INSURANCE_ID.equals(insuranceId)) {
 				insurancePremiumRate = (double)reslt.getInsurancePremiumRate1() / (double)reslt.getInsurancePremiumRate2();;
@@ -45,6 +45,18 @@ public class InsurancePremiumRateLogic {
 		}
 		
 		return insurancePremiumRate;
+	}
+	
+	public int registInsurancePremiumRate(List<InsurancePremiumRateBean> requestList) {
+		int reslt = 0;
+		
+		try {
+			reslt = dao.insert(requestList);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return reslt;
 	}
 	
 	public int updateInsurancePremiumRate(List<InsurancePremiumRateBean> requestList) {

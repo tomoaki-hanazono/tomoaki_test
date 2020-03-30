@@ -88,8 +88,8 @@
 <input type="hidden" name="employeeId" value="<%= employeeId %>">
 <input type="hidden" name="birthday" value="<%= birthday %>">
 <input type="hidden" name="dependents" value="<%= dependents %>">
-稼働月：<input type="text" name="year" value="<%= year %>" class="numberAria" readonly>年<input type="text" name="month" value="<%= month %>" class="numberAria" readonly>月
-<table>
+支給月：<input type="text" name="year" value="<%= year %>" class="numberAria" readonly>年<input type="text" name="month" value="<%= month %>" class="numberAria" readonly>月
+<table class="salaryAria">
 	<tr>
 		<th>基準時間</th>
 		<td><input type="text" name="lowerLimit" value="<%= lowerLimit %>" class="timeAria" readonly>〜<input type="text" name="upperLimit" value="<%= upperLimit %>" class="timeAria" readonly></td>
@@ -99,7 +99,10 @@
 		<td><input type="text" name="upperTime" value="<%= upperTime %>" class="timeAria" readonly>h</td>
 		<th>不足時間</th>
 		<td><input type="text" name="lowarTime" value="<%= lowarTime %>" class="timeAria" readonly>h</td>
-		<td colspan="2"></td>
+		<td colspan="5"></td>
+	</tr>
+	<tr>
+		<td colspan="13"></td>
 	</tr>
 	<tr>
 		<th>基本給</th>
@@ -112,6 +115,12 @@
 		<td><input type="text" name="overtimeAllowance" value="<%= overtimeAllowance %>" class="moneyAria" readonly>円</td>
 		<th>その他手当</th>
 		<td><input type="text" name="otherAllowance" value="<%= otherAllowance %>" class="moneyAria" readonly>円</td>
+		<td></td>
+		<th>総支給額</th>
+		<td><input type="text" name="totalPayment" value="<%= totalPayment %>" class="moneyAria" readonly>円</td>
+	</tr>
+	<tr>
+		<td colspan="10"></td><td></td><td colspan="2"></td>
 	</tr>
 	<tr>
 		<th>健康保険</th>
@@ -124,22 +133,21 @@
 		<td><input type="text" name="incomeTax" value="<%= incomeTax %>" class="moneyAria" readonly>円</td>
 		<th>時間不足控除</th>
 		<td><input type="text" name="shortageDeduction" value="<%= shortageDeduction %>" class="moneyAria" readonly>円</td>
+		<td></td>
+		<th>控除合計</th>
+		<td><input type="text" name="totalDeduction" value="<%= totalDeduction %>" class="moneyAria" readonly>円</td>
+	</tr>
+	<tr>
+		<td colspan="10"></td><td></td><td colspan="2"></td>
 	</tr>
 	<tr>
 		<th>超過</th>
 		<td><input type="text" name="excessMoney" value="<%= excessMoney %>" class="moneyAria" readonly>円</td>
 		<th>控除</th>
 		<td><input type="text" name="eductionMoney" value="<%= eductionMoney %>" class="moneyAria" readonly>円</td>
-		<td colspan="6"></td>
-	</tr>
-	<tr>
-		<th>総支給額</th>
-		<td><input type="text" name="totalPayment" value="<%= totalPayment %>" class="moneyAria" readonly>円</td>
-		<th>控除合計</th>
-		<td><input type="text" name="totalDeduction" value="<%= totalDeduction %>" class="moneyAria" readonly>円</td>
+		<td colspan="6"></td><td></td>
 		<th>差引支給</th>
 		<td><input type="text" name="payment" value="<%= payment %>" class="moneyAria" readonly>円</td>
-		<td colspan="4"></td>
 	</tr>
 </table>
 <input type="submit" name="regist" value="登録">

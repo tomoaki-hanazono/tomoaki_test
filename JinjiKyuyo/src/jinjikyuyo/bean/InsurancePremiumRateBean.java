@@ -2,6 +2,7 @@ package jinjikyuyo.bean;
 
 public class InsurancePremiumRateBean implements java.io.Serializable {
 	private String insuranceId;
+	private String startDate;
 	private String insuranceName;
 	private int insurancePremiumRate1;
 	private int insurancePremiumRate2;
@@ -13,6 +14,12 @@ public class InsurancePremiumRateBean implements java.io.Serializable {
 	}
 	public String getInsuranceName() {
 		return insuranceName;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
 	public void setInsuranceName(String insuranceName) {
 		this.insuranceName = insuranceName;

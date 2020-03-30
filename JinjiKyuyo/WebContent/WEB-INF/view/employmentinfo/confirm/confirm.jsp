@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
-<%@ page import="jinjikyuyo.bean.EmploymentBean" %>
-<%  List<EmploymentBean>employmentList=(List<EmploymentBean>)request.getAttribute("employmentList"); %>
+<%@ page import="jinjikyuyo.bean.EmploymentInfoBean" %>
+<%@ page import="jinjikyuyo.bean.EmploymentInfoHistoryBean" %>
+<%  EmploymentInfoBean employmentInfo = (EmploymentInfoBean)request.getAttribute("employmentInfo"); %>
+<%  List<EmploymentInfoHistoryBean>employmentHistoryList = (List<EmploymentInfoHistoryBean>)request.getAttribute("employmentHistoryList"); %>
 <%  List<String> messageList = (List<String>)request.getAttribute("message"); %>
 <%  int employeeId = (int)request.getAttribute("employeeId"); %>
 <%  String employeeName = (String)request.getAttribute("employeeName"); %>
@@ -28,10 +30,12 @@
 	<hr>
 	<% } %>
 </div>
+<p><%= employeeName %></p>
+<% if (employmentInfo == null || employmentInfo.getEmployeeId() == 0) { %>
 <form method="post" action="/JinjiKyuyo/employmentInfo/confirm" class="center">
 	<input type="hidden" name="type" value="add">
 	<input type="hidden" name="employeeId" value="<%= employeeId %>">
-	<input type="text" name="employeeName" value="<%= employeeName %>" class="numberAria" readonly>
+	<input type="hidden" name="employeeName" value="<%= employeeName %>">
 	
 	<input type="button" name="addEmployment" value="雇用情報追加" class="button" onClick="changeAria()">
 	<div id="addEmploymentAria" class="noDisplay">
@@ -187,58 +191,96 @@
 		<hr>
 	</div>
 </form>
+<hr>
+<h2 style="color:red">雇用情報が存在しません。</h2>
+<% } else { %>
 <form method="post" action="/JinjiKyuyo/employmentInfo/confirm" class="center" onsubmit="return checkDefault()">
 	<input type="hidden" name="type" value="update">
-	<input type="hidden" name="employeeId" value="<%= employeeId %>">
 	<input type="hidden" name="employeeName" value="<%= employeeName %>">
-	<% if (employmentList != null && employmentList.size() > 0) { %>
-		<% for (EmploymentBean employment : employmentList) { %>
-			<input type="checkbox" name="employmentId" value="<%= employment.getEmploymentId() %>" onclick="changeCheckBox(this)">修正をする
-			<table class="addressListAria" id="employmentInfoAria_<%= employment.getEmploymentId() %>">
-				<tr><th class="w1" colspan="2">雇用期間</th><th class="w1">基準時間</th><th class="w1">超過</th><th class="w1">控除</th></tr>
-				<tr>
-					<td colspan="2">
-						<%= employment.getEmploymentPeriodStart().substring(0,4) + "年"
-							+ employment.getEmploymentPeriodStart().substring(4,6) + "月"
-							+ employment.getEmploymentPeriodStart().substring(6,8) + "日"
-							+ "から"
-							+ employment.getEmploymentPeriodEnd().substring(0,4) + "年"
-							+ employment.getEmploymentPeriodEnd().substring(4,6) + "月"
-							+ employment.getEmploymentPeriodEnd().substring(6,8) + "日" %>
-					</td>
-					<td><input type="text" id="lowerLimit_<%= employment.getEmploymentId() %>" name="lowerLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getLowerLimit() %>" onChange="checkNumber(this)" class="timeAria" disabled="disabled">h〜<input type="text" id="upperLimit_<%= employment.getEmploymentId() %>" name="upperLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getUpperLimit() %>" onChange="checkNumber(this)" class="timeAria" disabled="disabled">h</td>
-					<td><input type="text" id="excessMoney_<%= employment.getEmploymentId() %>" name="excessMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getExcessMoney() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-					<td><input type="text" id="eductionMoney_<%= employment.getEmploymentId() %>" name="eductionMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getEductionMoney() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-				</tr>
-				<tr><th class="w1">基本給</th><th class="w1">職務手当</th><th class="w1">通勤手当</th><th class="w2">時間外手当</th><th class="w2">その他手当</th></tr>
-				<tr>
-					<td><input type="text" id="basicSalary_<%= employment.getEmploymentId() %>" name="basicSalary_<%= employment.getEmploymentId() %>" value="<%= employment.getBasicSalary() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-					<td><input type="text" id="dutiesAllowance_<%= employment.getEmploymentId() %>" name="dutiesAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getDutiesAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-					<td><input type="text" id="commutingAllowance_<%= employment.getEmploymentId() %>" name="commutingAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getCommutingAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-					<td><input type="text" id="overtimeAllowance_<%= employment.getEmploymentId() %>" name="overtimeAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOvertimeAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-					<td><input type="text" id="otherAllowance_<%= employment.getEmploymentId() %>" name="otherAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOtherAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
-				</tr>
-			</table>
-			<div id="employmentInfoHiddenAria_<%= employment.getEmploymentId() %>">
-				<input type="hidden" id="hiddenLowerLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getLowerLimit() %>">
-				<input type="hidden" id="hiddenUpperLimit_<%= employment.getEmploymentId() %>" value="<%= employment.getUpperLimit() %>">
-				<input type="hidden" id="hiddenExcessMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getExcessMoney() %>">
-				<input type="hidden" id="hiddenEductionMoney_<%= employment.getEmploymentId() %>" value="<%= employment.getEductionMoney() %>">
-				<input type="hidden" id="hiddenBasicSalary_<%= employment.getEmploymentId() %>" value="<%= employment.getBasicSalary() %>">
-				<input type="hidden" id="hiddenDutiesAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getDutiesAllowance() %>">
-				<input type="hidden" id="hiddenCommutingAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getCommutingAllowance() %>">
-				<input type="hidden" id="hiddenOvertimeAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOvertimeAllowance() %>">
-				<input type="hidden" id="hiddenOtherAllowance_<%= employment.getEmploymentId() %>" value="<%= employment.getOtherAllowance() %>">
-			</div>
-		<% } %>
-	<% } else { %>
-		<hr>
-		<h2 style="color:red">雇用情報が存在しません。</h2>
-		<hr>
-	<% } %>
+	<input type="checkbox" name="employeeId" value="<%= employeeId %>" onclick="changeCheckBox(this)">修正をする
+	<table class="addressListAria" id="employmentInfoAria">
+		<tr><th class="w1" colspan="2">雇用期間</th><th class="w1">基準時間</th><th class="w1">超過</th><th class="w1">控除</th></tr>
+		<tr>
+			<td colspan="2">
+				<input type="text" id="changeStartYear" name="startYear" value="<%= employmentInfo.getEmploymentPeriodStart().substring(0,4) %>" onChange="checkNumber(this)" class="timeAria" disabled="disabled">年
+				<input type="text" id="changeStartMonth" name="startMonth" value="<%= employmentInfo.getEmploymentPeriodStart().substring(4,6) %>" onChange="checkNumber(this)" class="dayAria" disabled="disabled">月
+				<input type="text" id="changeStartDay" name="startDay" value="<%= employmentInfo.getEmploymentPeriodStart().substring(6,8) %>" onChange="checkNumber(this)" class="dayAria" disabled="disabled">日 から
+				<input type="text" id="changeEndYear" name="endYear" value="<%= employmentInfo.getEmploymentPeriodEnd().substring(0,4) %>" onChange="checkNumber(this)" class="timeAria" disabled="disabled">年
+				<input type="text" id="changeEndMonth" name="endMonth" value="<%= employmentInfo.getEmploymentPeriodEnd().substring(4,6) %>" onChange="checkNumber(this)" class="dayAria" disabled="disabled">月
+				<input type="text" id="changeEndDay" name="endDay" value="<%= employmentInfo.getEmploymentPeriodEnd().substring(6,8) %>" onChange="checkNumber(this)" class="dayAria" disabled="disabled">日
+			</td>
+			<td><input type="text" id="lowerLimit" name="lowerLimit" value="<%= employmentInfo.getLowerLimit() %>" onChange="checkNumber(this)" class="timeAria" disabled="disabled">h〜<input type="text" id="upperLimit" name="upperLimit" value="<%= employmentInfo.getUpperLimit() %>" onChange="checkNumber(this)" class="timeAria" disabled="disabled">h</td>
+			<td><input type="text" id="excessMoney" name="excessMoney" value="<%= employmentInfo.getExcessMoney() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+			<td><input type="text" id="eductionMoney" name="eductionMoney" value="<%= employmentInfo.getEductionMoney() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+		</tr>
+		<tr><th class="w1">基本給</th><th class="w1">職務手当</th><th class="w1">通勤手当</th><th class="w2">時間外手当</th><th class="w2">その他手当</th></tr>
+		<tr>
+			<td><input type="text" id="basicSalary" name="basicSalary" value="<%= employmentInfo.getBasicSalary() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+			<td><input type="text" id="dutiesAllowance" name="dutiesAllowance" value="<%= employmentInfo.getDutiesAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+			<td><input type="text" id="commutingAllowance" name="commutingAllowance" value="<%= employmentInfo.getCommutingAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+			<td><input type="text" id="overtimeAllowance" name="overtimeAllowance" value="<%= employmentInfo.getOvertimeAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+			<td><input type="text" id="otherAllowance" name="otherAllowance" value="<%= employmentInfo.getOtherAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+		</tr>
+	</table>
+	<div id="employmentInfoHiddenAria">
+		<input type="hidden" id="hiddenStartYear" value="<%= employmentInfo.getEmploymentPeriodStart().substring(0,4) %>">
+		<input type="hidden" id="hiddenStartMonth" value="<%= employmentInfo.getEmploymentPeriodStart().substring(4,6) %>">
+		<input type="hidden" id="hiddenStartDay" value="<%= employmentInfo.getEmploymentPeriodStart().substring(6,8) %>">
+		<input type="hidden" id="hiddenEndYear" value="<%= employmentInfo.getEmploymentPeriodEnd().substring(0,4) %>">
+		<input type="hidden" id="hiddenEndMonth" value="<%= employmentInfo.getEmploymentPeriodEnd().substring(4,6) %>">
+		<input type="hidden" id="hiddenEndDay" value="<%= employmentInfo.getEmploymentPeriodEnd().substring(6,8) %>">
+		<input type="hidden" id="hiddenLowerLimit" value="<%= employmentInfo.getLowerLimit() %>">
+		<input type="hidden" id="hiddenUpperLimit" value="<%= employmentInfo.getUpperLimit() %>">
+		<input type="hidden" id="hiddenExcessMoney" value="<%= employmentInfo.getExcessMoney() %>">
+		<input type="hidden" id="hiddenEductionMoney" value="<%= employmentInfo.getEductionMoney() %>">
+		<input type="hidden" id="hiddenBasicSalary" value="<%= employmentInfo.getBasicSalary() %>">
+		<input type="hidden" id="hiddenDutiesAllowance" value="<%= employmentInfo.getDutiesAllowance() %>">
+		<input type="hidden" id="hiddenCommutingAllowance" value="<%= employmentInfo.getCommutingAllowance() %>">
+		<input type="hidden" id="hiddenOvertimeAllowance" value="<%= employmentInfo.getOvertimeAllowance() %>">
+		<input type="hidden" id="hiddenOtherAllowance" value="<%= employmentInfo.getOtherAllowance() %>">
+	</div>
 	<input type="submit" id="update" name="update" value="修正" class="button" disabled="disabled">
-	<a href="/JinjiKyuyo/employee/list" class="button">戻る</a>
+	<br>
+	<input type="button" name="history" value="過去雇用情報" class="button" onClick="changeHistoryAria()">
+	<div id="historyAria" class="noDisplay">
+		<% if (employmentHistoryList != null && employmentHistoryList.size() > 0) { %>
+			<% for (EmploymentInfoHistoryBean employmentHistory : employmentHistoryList) { %>
+				<table class="addressListAria">
+					<tr><th class="w1" colspan="2">雇用期間</th><th class="w1">基準時間</th><th class="w1">超過</th><th class="w1">控除</th></tr>
+					<tr>
+						<td colspan="2">
+							<%= employmentHistory.getEmploymentPeriodStart().substring(0,4) + "年"
+								+ employmentHistory.getEmploymentPeriodStart().substring(4,6) + "月"
+								+ employmentHistory.getEmploymentPeriodStart().substring(6,8) + "日"
+								+ "から"
+								+ employmentHistory.getEmploymentPeriodEnd().substring(0,4) + "年"
+								+ employmentHistory.getEmploymentPeriodEnd().substring(4,6) + "月"
+								+ employmentHistory.getEmploymentPeriodEnd().substring(6,8) + "日" %>
+						</td>
+						<td><%= employmentHistory.getLowerLimit() %>h〜<%= employmentHistory.getUpperLimit() %>h</td>
+						<td><%= employmentHistory.getExcessMoney() %>円</td>
+						<td><%= employmentHistory.getEductionMoney() %>円</td>
+					</tr>
+					<tr><th class="w1">基本給</th><th class="w1">職務手当</th><th class="w1">通勤手当</th><th class="w2">時間外手当</th><th class="w2">その他手当</th></tr>
+					<tr>
+						<td><%= employmentHistory.getBasicSalary() %>円</td>
+						<td><%= employmentHistory.getDutiesAllowance() %>円</td>
+						<td><%= employmentHistory.getCommutingAllowance() %>円</td>
+						<td><%= employmentHistory.getOvertimeAllowance() %>円</td>
+						<td><%= employmentHistory.getOtherAllowance() %>円</td>
+					</tr>
+				</table>
+			<% } %>
+		<% } else { %>
+			<hr>
+			<h2>過去の雇用情報は存在しません。</h2>
+			<hr>
+		<% } %>
+	</div>
+<% } %>
 </form>
-
+<div class="center">
+	<a href="/JinjiKyuyo/employee/list" class="button">戻る</a>
+</div>
 </body>
 </html>

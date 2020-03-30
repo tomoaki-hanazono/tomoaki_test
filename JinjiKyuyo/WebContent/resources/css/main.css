@@ -58,6 +58,10 @@ table.employeeListAria input.nameAria {
 	width: 100px;
 }
 
+table.salaryAria {
+	width: 1200px;
+}
+
 input[type="text"] {
 	width: 100%;
 }
@@ -80,6 +84,10 @@ input.moneyAria {
 }
 input.timeAria {
 	width: 40px;
+	text-align: right;
+}
+input.dayAria {
+	width: 20px;
 	text-align: right;
 }
 

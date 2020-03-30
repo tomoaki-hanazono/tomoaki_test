@@ -102,10 +102,10 @@ public class JinjikyuyoUtil {
 	}
 	
 	
-	public int getHealthInsurance(int monthryRemuneration, int age) {
+	public int getHealthInsurance(int monthryRemuneration, String targetDate, int age) {
 		int healthInsurance = 0;
-		double healthInsuranceRate = logic.getInsurancePremiumRate(HEALTH_INSURANCE);
-		double careInsuranceRate = logic.getInsurancePremiumRate(CARE_INSURANCE);
+		double healthInsuranceRate = logic.getInsurancePremiumRate(HEALTH_INSURANCE, targetDate);
+		double careInsuranceRate = logic.getInsurancePremiumRate(CARE_INSURANCE, targetDate);
 		if (40 <= age) {
 			healthInsurance = (int)Math.round(monthryRemuneration * (healthInsuranceRate + careInsuranceRate) / 100 / 2);
 		} else {
@@ -115,9 +115,9 @@ public class JinjikyuyoUtil {
 		return healthInsurance;
 	}
 	
-	public int getEmployeePension(int monthryRemuneration) {
+	public int getEmployeePension(int monthryRemuneration, String targetDate) {
 		int employeePension = 0;
-		double employeePensionRate = logic.getInsurancePremiumRate(EMPLOYEE_PENSION);
+		double employeePensionRate = logic.getInsurancePremiumRate(EMPLOYEE_PENSION, targetDate);
 		if (monthryRemuneration < 88000) {
 			monthryRemuneration = 88000;
 		} else if (monthryRemuneration > 620000) {
@@ -128,9 +128,9 @@ public class JinjikyuyoUtil {
 		return employeePension;
 	}
 	
-	public int getEmploymentInsurance(int monthryRemuneration) {
+	public int getEmploymentInsurance(int monthryRemuneration, String targetDate) {
 		int employmentInsurance = 0;
-		double employmentInsuranceRate = logic.getInsurancePremiumRate(EMPLOYMENT_INSURANCE);
+		double employmentInsuranceRate = logic.getInsurancePremiumRate(EMPLOYMENT_INSURANCE, targetDate);
 		employmentInsurance = (int)Math.round(monthryRemuneration * employmentInsuranceRate);
 		
 		return employmentInsurance;

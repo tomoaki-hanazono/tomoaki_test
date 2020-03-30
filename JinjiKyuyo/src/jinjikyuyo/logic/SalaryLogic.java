@@ -3,7 +3,6 @@ package jinjikyuyo.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import jinjikyuyo.bean.EmploymentBean;
 import jinjikyuyo.bean.SalaryBean;
 import jinjikyuyo.dao.SalaryDAO;
 

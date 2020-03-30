@@ -22,7 +22,7 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 			con = getConnection();
 			
 			// SQL文作成
-			String sql = "SELECT * FROM insurance_premium_rate";
+			String sql = "SELECT * FROM insurance_premium_rate ORDER BY start_date DESC";
 			
 			// SQL作成
 			PreparedStatement st = con.prepareStatement(sql);
@@ -34,10 +34,13 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 			while (rs.next()) {
 				InsurancePremiumRateBean insurancePremiumRate = new InsurancePremiumRateBean();
 				insurancePremiumRate.setInsuranceId(rs.getString("insurance_id"));
+				insurancePremiumRate.setInsuranceName(rs.getString("start_date"));
 				insurancePremiumRate.setInsuranceName(rs.getString("insurance_name"));
 				insurancePremiumRate.setInsurancePremiumRate1(rs.getInt("insurance_premium_rate_1"));
 				insurancePremiumRate.setInsurancePremiumRate2(rs.getInt("insurance_premium_rate_2"));
-				reslt.put(rs.getString("insurance_id"), insurancePremiumRate);
+				if(!reslt.containsKey(rs.getString("insurance_id"))) {
+					reslt.put(rs.getString("insurance_id"), insurancePremiumRate);
+				}
 			}
 			
 			// 接続解除
@@ -60,7 +63,7 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 		return reslt;
 	}
 	
-	public InsurancePremiumRateBean selectInsurancePremiumRateForInsuranceId(String insuranceId) {
+	public InsurancePremiumRateBean selectInsurancePremiumRateForInsuranceId(String insuranceId, String targetDate) {
 		InsurancePremiumRateBean reslt = new InsurancePremiumRateBean();
 		Connection con = null;
 		
@@ -69,11 +72,12 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 			con = getConnection();
 			
 			// SQL文作成
-			String sql = "SELECT * FROM insurance_premium_rate WHERE insurance_id = ?";
+			String sql = "SELECT * FROM insurance_premium_rate WHERE insurance_id = ? AND start_date <= ? ORDER BY start_date DESC";
 			
 			// SQL作成
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, insuranceId);
+			st.setString(2, targetDate);
 			
 			// SQL実行
 			ResultSet rs = st.executeQuery();
@@ -81,9 +85,11 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 	        // データをセット
 			while (rs.next()) {
 				reslt.setInsuranceId(rs.getString("insurance_id"));
+				reslt.setStartDate(rs.getString("start_date"));
 				reslt.setInsuranceName(rs.getString("insurance_name"));
 				reslt.setInsurancePremiumRate1(rs.getInt("insurance_premium_rate_1"));
 				reslt.setInsurancePremiumRate2(rs.getInt("insurance_premium_rate_2"));
+				break;
 			}
 			
 			// 接続解除
@@ -102,6 +108,55 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 	        	}
 			}
 		}
+		
+		return reslt;
+	}
+
+	public int insert(List<InsurancePremiumRateBean> requestList) throws Exception {
+		Connection con = null;
+		int reslt = 0;
+		
+		try {
+			// DB接続
+			con = getConnection();
+			con.setAutoCommit(false);
+			
+			// SQL文作成
+			String sql = "INSERT INTO insurance_premium_rate VALUED(?,?,?,?,?)";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			for (InsurancePremiumRateBean request : requestList) {
+				st.setString(1, request.getInsuranceId());
+				st.setString(2, request.getStartDate());
+				st.setString(3, request.getInsuranceName());
+				st.setInt(4, request.getInsurancePremiumRate1());
+				st.setInt(5, request.getInsurancePremiumRate2());
+				st.addBatch();
+			}
+			
+			// SQL実行
+			reslt = st.executeUpdate();
+			
+			// 接続解除
+			st.close();
+			con.commit();
+			
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		con.close();
 		
 		return reslt;
 	}
@@ -118,7 +173,7 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 			// SQL文作成
 			String sql = "UPDATE insurance_premium_rate SET insurance_premium_rate_1 = ?," + 
 					" insurance_premium_rate_2 = ?" + 
-					" WHERE insurance_id = ?";
+					" WHERE insurance_id = ? AND start_date = ?";
 			
 			// SQL作成
 			PreparedStatement st = con.prepareStatement(sql);
@@ -127,6 +182,7 @@ public class InsurancePremiumRateDAO extends CommonDAO {
 				st.setInt(1, request.getInsurancePremiumRate1());
 				st.setInt(2, request.getInsurancePremiumRate2());
 				st.setString(3, request.getInsuranceId());
+				st.setString(4, request.getStartDate());
 				st.addBatch();
 			}
 			

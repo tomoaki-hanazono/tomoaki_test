@@ -6,16 +6,18 @@ window.onload = function() {
 	var selectE = document.getElementById("endYear");
 	var maxYear = nowYear + 3;
 	
-	for (let i = 7; i >= 0; i--) {
-		var optionS = document.createElement("option");
-		optionS.text = maxYear - i;
-		optionS.value = maxYear - i;
-		selectS.appendChild(optionS);
-		
-		var optionE = document.createElement("option");
-		optionE.text = maxYear - i;
-		optionE.value = maxYear - i;
-		selectE.appendChild(optionE);
+	if(selectS != null && selectE != null) {
+		for (let i = 7; i >= 0; i--) {
+			var optionS = document.createElement("option");
+			optionS.text = maxYear - i;
+			optionS.value = maxYear - i;
+			selectS.appendChild(optionS);
+			
+			var optionE = document.createElement("option");
+			optionE.text = maxYear - i;
+			optionE.value = maxYear - i;
+			selectE.appendChild(optionE);
+		}
 	}
 }
 
@@ -28,10 +30,19 @@ function changeAria() {
 	}
 }
 
+function changeHistoryAria() {
+	var aria = document.getElementById("historyAria");
+	if (aria.classList.contains("noDisplay") == true) {
+		aria.classList.remove("noDisplay");
+	} else {
+		aria.classList.add("noDisplay");
+	}
+}
+
 function changeCheckBox($this) {
 	var val = $this.value;
-	var target = document.querySelectorAll("#employmentInfoAria_" + val + " input");
-	var checkbox = document.getElementsByName("employmentId");
+	var target = document.querySelectorAll("#employmentInfoAria input");
+	var checkbox = document.getElementsByName("employeeId");
 	var checked = 0;
 	var button = document.getElementById("update");
 	
@@ -60,30 +71,48 @@ function changeCheckBox($this) {
 }
 
 function changeDefault(id) {
-	var table = document.getElementById("employmentInfoAria_" + id);
-	var lowerLimit = document.getElementById("lowerLimit_" + id);
-	var upperLimit = document.getElementById("upperLimit_" + id);
-	var excessMoney = document.getElementById("excessMoney_" + id);
-	var eductionMoney = document.getElementById("eductionMoney_" + id);
-	var basicSalary = document.getElementById("basicSalary_" + id);
-	var dutiesAllowance = document.getElementById("dutiesAllowance_" + id);
-	var commutingAllowance = document.getElementById("commutingAllowance_" + id);
-	var overtimeAllowance = document.getElementById("overtimeAllowance_" + id);
-	var otherAllowance = document.getElementById("otherAllowance_" + id);
-	
-	var hiddenLowerLimit = document.getElementById("hiddenLowerLimit_" + id);
-	var hiddenUpperLimit = document.getElementById("hiddenUpperLimit_" + id);
-	var hiddenExcessMoney = document.getElementById("hiddenExcessMoney_" + id);
-	var hiddenEductionMoney = document.getElementById("hiddenEductionMoney_" + id);
-	var hiddenBasicSalary = document.getElementById("hiddenBasicSalary_" + id);
-	var hiddenDutiesAllowance = document.getElementById("hiddenDutiesAllowance_" + id);
-	var hiddenCommutingAllowance = document.getElementById("hiddenCommutingAllowance_" + id);
-	var hiddenOvertimeAllowance = document.getElementById("hiddenOvertimeAllowance_" + id);
-	var hiddenOtherAllowance = document.getElementById("hiddenOtherAllowance_" + id);
+	var table = document.getElementById("employmentInfoAria");
+	var changeStartYear = document.getElementById("changeStartYear");
+	var changeStartMonth = document.getElementById("changeStartMonth");
+	var changeStartDay = document.getElementById("changeStartDay");
+	var changeEndYear = document.getElementById("changeEndYear");
+	var changeEndMonth = document.getElementById("changeEndMonth");
+	var changeEndDay = document.getElementById("changeEndDay");
+	var lowerLimit = document.getElementById("lowerLimit");
+	var upperLimit = document.getElementById("upperLimit");
+	var excessMoney = document.getElementById("excessMoney");
+	var eductionMoney = document.getElementById("eductionMoney");
+	var basicSalary = document.getElementById("basicSalary");
+	var dutiesAllowance = document.getElementById("dutiesAllowance");
+	var commutingAllowance = document.getElementById("commutingAllowance");
+	var overtimeAllowance = document.getElementById("overtimeAllowance");
+	var otherAllowance = document.getElementById("otherAllowance");
+
+	var hiddenStartYear = document.getElementById("hiddenStartYear");
+	var hiddenStartMonth = document.getElementById("hiddenStartMonth");
+	var hiddenStartDay = document.getElementById("hiddenStartDay");
+	var hiddenEndYear = document.getElementById("hiddenEndYear");
+	var hiddenEndMonth = document.getElementById("hiddenEndMonth");
+	var hiddenEndDay = document.getElementById("hiddenEndDay");
+	var hiddenLowerLimit = document.getElementById("hiddenLowerLimit");
+	var hiddenUpperLimit = document.getElementById("hiddenUpperLimit");
+	var hiddenExcessMoney = document.getElementById("hiddenExcessMoney");
+	var hiddenEductionMoney = document.getElementById("hiddenEductionMoney");
+	var hiddenBasicSalary = document.getElementById("hiddenBasicSalary");
+	var hiddenDutiesAllowance = document.getElementById("hiddenDutiesAllowance");
+	var hiddenCommutingAllowance = document.getElementById("hiddenCommutingAllowance");
+	var hiddenOvertimeAllowance = document.getElementById("hiddenOvertimeAllowance");
+	var hiddenOtherAllowance = document.getElementById("hiddenOtherAllowance");
 	
 	if (table.classList.contains("tableErr") == true) {
 		table.classList.remove("tableErr");
 	}
+	changeStartYear.value = hiddenStartYear.value;
+	changeStartMonth.value = hiddenStartMonth.value;
+	changeStartDay.value = hiddenStartDay.value;
+	changeEndYear.value = hiddenEndYear.value;
+	changeEndMonth.value = hiddenEndMonth.value;
+	changeEndDay.value = hiddenEndDay.value;
 	lowerLimit.value = hiddenLowerLimit.value;
 	upperLimit.value = hiddenUpperLimit.value;
 	excessMoney.value = hiddenExcessMoney.value;
@@ -97,7 +126,7 @@ function changeDefault(id) {
 
 function checkDefault() {
 	
-	var checkbox = document.getElementsByName("employmentId");
+	var checkbox = document.getElementsByName("employeeId");
 	var err = 0;
 	var messageAria = document.getElementById("messageAria");
 	var line = document.createElement("hr");
@@ -114,28 +143,46 @@ function checkDefault() {
 		if(e.checked) {
 			var id = e.value;
 			
-			var table = document.getElementById("employmentInfoAria_" + id);
-			var lowerLimit = document.getElementById("lowerLimit_" + id);
-			var upperLimit = document.getElementById("upperLimit_" + id);
-			var excessMoney = document.getElementById("excessMoney_" + id);
-			var eductionMoney = document.getElementById("eductionMoney_" + id);
-			var basicSalary = document.getElementById("basicSalary_" + id);
-			var dutiesAllowance = document.getElementById("dutiesAllowance_" + id);
-			var commutingAllowance = document.getElementById("commutingAllowance_" + id);
-			var overtimeAllowance = document.getElementById("overtimeAllowance_" + id);
-			var otherAllowance = document.getElementById("otherAllowance_" + id);
+			var table = document.getElementById("employmentInfoAria");
+			var changeStartYear = document.getElementById("changeStartYear");
+			var changeStartMonth = document.getElementById("changeStartMonth");
+			var changeStartDay = document.getElementById("changeStartDay");
+			var changeEndYear = document.getElementById("changeEndYear");
+			var changeEndMonth = document.getElementById("changeEndMonth");
+			var changeEndDay = document.getElementById("changeEndDay");
+			var lowerLimit = document.getElementById("lowerLimit");
+			var upperLimit = document.getElementById("upperLimit");
+			var excessMoney = document.getElementById("excessMoney");
+			var eductionMoney = document.getElementById("eductionMoney");
+			var basicSalary = document.getElementById("basicSalary");
+			var dutiesAllowance = document.getElementById("dutiesAllowance");
+			var commutingAllowance = document.getElementById("commutingAllowance");
+			var overtimeAllowance = document.getElementById("overtimeAllowance");
+			var otherAllowance = document.getElementById("otherAllowance");
 			
-			var hiddenLowerLimit = document.getElementById("hiddenLowerLimit_" + id);
-			var hiddenUpperLimit = document.getElementById("hiddenUpperLimit_" + id);
-			var hiddenExcessMoney = document.getElementById("hiddenExcessMoney_" + id);
-			var hiddenEductionMoney = document.getElementById("hiddenEductionMoney_" + id);
-			var hiddenBasicSalary = document.getElementById("hiddenBasicSalary_" + id);
-			var hiddenDutiesAllowance = document.getElementById("hiddenDutiesAllowance_" + id);
-			var hiddenCommutingAllowance = document.getElementById("hiddenCommutingAllowance_" + id);
-			var hiddenOvertimeAllowance = document.getElementById("hiddenOvertimeAllowance_" + id);
-			var hiddenOtherAllowance = document.getElementById("hiddenOtherAllowance_" + id);
+			var hiddenStartYear = document.getElementById("hiddenStartYear");
+			var hiddenStartMonth = document.getElementById("hiddenStartMonth");
+			var hiddenStartDay = document.getElementById("hiddenStartDay");
+			var hiddenEndYear = document.getElementById("hiddenEndYear");
+			var hiddenEndMonth = document.getElementById("hiddenEndMonth");
+			var hiddenEndDay = document.getElementById("hiddenEndDay");
+			var hiddenLowerLimit = document.getElementById("hiddenLowerLimit");
+			var hiddenUpperLimit = document.getElementById("hiddenUpperLimit");
+			var hiddenExcessMoney = document.getElementById("hiddenExcessMoney");
+			var hiddenEductionMoney = document.getElementById("hiddenEductionMoney");
+			var hiddenBasicSalary = document.getElementById("hiddenBasicSalary");
+			var hiddenDutiesAllowance = document.getElementById("hiddenDutiesAllowance");
+			var hiddenCommutingAllowance = document.getElementById("hiddenCommutingAllowance");
+			var hiddenOvertimeAllowance = document.getElementById("hiddenOvertimeAllowance");
+			var hiddenOtherAllowance = document.getElementById("hiddenOtherAllowance");
 			
-			if( lowerLimit.value == hiddenLowerLimit.value
+			if( changeStartYear.value == hiddenStartYear.value
+					&& changeStartMonth.value == hiddenStartMonth.value
+					&& changeStartDay.value == hiddenStartDay.value
+					&& changeEndYear.value == hiddenEndYear.value
+					&& changeEndMonth.value == hiddenEndMonth.value
+					&& changeEndDay.value == hiddenEndDay.value
+					&& lowerLimit.value == hiddenLowerLimit.value
 					&& upperLimit.value == hiddenUpperLimit.value
 					&& excessMoney.value == hiddenExcessMoney.value
 					&& eductionMoney.value == hiddenEductionMoney.value

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jinjikyuyo.bean.EmploymentBean;
-import jinjikyuyo.logic.EmploymentLogic;
+import jinjikyuyo.bean.EmploymentInfoBean;
+import jinjikyuyo.logic.EmploymentInfoLogic;
 import jinjikyuyo.logic.IncomeTaxMasterLogic;
 import jinjikyuyo.util.JinjikyuyoUtil;
 import jinjikyuyo.validator.CommonValidator;
@@ -25,7 +25,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private CommonValidator validator = new CommonValidator();
-	private EmploymentLogic eLogic = new EmploymentLogic();
+	private EmploymentInfoLogic eLogic = new EmploymentInfoLogic();
 	private IncomeTaxMasterLogic iLogic = new IncomeTaxMasterLogic();
 	private List<String> message = new ArrayList<>();
 	
@@ -96,6 +96,12 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		String month = request.getParameter("month");
 		if(!validator.isRequired(year) || !validator.isRequired(month)) {
 			message.add("稼働月を選択してください。");
+		} else if("12".equals(month)) {
+			year = String.valueOf(Integer.parseInt(year) + 1);
+			month = "01";
+		} else {
+			String nextMonth = "0" + String.valueOf(Integer.parseInt(month) + 1);
+			month = nextMonth.substring(nextMonth.length() - 2);
 		}
 		String operatingTime1 = request.getParameter("operatingTime1");
 		String operatingTime2 = request.getParameter("operatingTime2");
@@ -109,9 +115,9 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		
 		if (message.size() == 0) {
 			double operatingTime = Double.parseDouble(operatingTime1 + "." + operatingTime2);
-			EmploymentBean employment = eLogic.getEmploymentInfo(employeeId, year+month+"01");
+			EmploymentInfoBean employment = eLogic.getEmploymentInfo(employeeId);
 			
-			if (employment != null && employment.getEmploymentId() != 0) {
+			if (employment != null && employment.getEmployeeId() != 0) {
 				int basicSalary = employment.getBasicSalary();
 				int dutiesAllowance = employment.getDutiesAllowance();
 				int commutingAllowance = employment.getCommutingAllowance();
@@ -153,9 +159,9 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				}
 				
 				monthryRemuneration = util.searchMonthryRemuneration(totalPayment);
-				healthInsurance = util.getHealthInsurance(monthryRemuneration, age);
-				employeePension = util.getEmployeePension(monthryRemuneration);
-				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration);
+				healthInsurance = util.getHealthInsurance(monthryRemuneration, year + month, age);
+				employeePension = util.getEmployeePension(monthryRemuneration, year + month);
+				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration, year + month);
 				totalInsurance = healthInsurance + employeePension + employmentInsurance;
 				otherPayment = totalPayment - totalInsurance - shortageDeduction;
 				incomeTax = iLogic.getIncomeTax(otherPayment, dependents);

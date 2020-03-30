@@ -1,7 +1,7 @@
 package jinjikyuyo.bean;
 
-public class EmploymentBean implements java.io.Serializable {
-	private int employmentId;
+public class EmploymentInfoHistoryBean implements java.io.Serializable {
+	private int historyId;
 	private int employeeId;
 	private String employeeName;
 	private String employmentPeriodStart;
@@ -17,11 +17,11 @@ public class EmploymentBean implements java.io.Serializable {
 	private int upperLimit;
 	private String jobDescription;
 	private String remarks;
-	public int getEmploymentId() {
-		return employmentId;
+	public int getHistoryId() {
+		return historyId;
 	}
-	public void setEmploymentId(int employmentId) {
-		this.employmentId = employmentId;
+	public void setHistoryId(int historyId) {
+		this.historyId = historyId;
 	}
 	public int getEmployeeId() {
 		return employeeId;
@@ -112,5 +112,23 @@ public class EmploymentBean implements java.io.Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public void set(EmploymentInfoBean before) {
+		this.setEmployeeId(before.getEmployeeId());
+		this.setEmployeeName(before.getEmployeeName());
+		this.setEmploymentPeriodStart(before.getEmploymentPeriodStart());
+		this.setEmploymentPeriodEnd(before.getEmploymentPeriodEnd());
+		this.setBasicSalary(before.getBasicSalary());
+		this.setDutiesAllowance(before.getDutiesAllowance());
+		this.setCommutingAllowance(before.getCommutingAllowance());
+		this.setOvertimeAllowance(before.getOvertimeAllowance());
+		this.setOtherAllowance(before.getOtherAllowance());
+		this.setExcessMoney(before.getExcessMoney());
+		this.setEductionMoney(before.getEductionMoney());
+		this.setLowerLimit(before.getLowerLimit());
+		this.setUpperLimit(before.getUpperLimit());
+		this.setJobDescription(before.getJobDescription());
+		this.setRemarks(before.getRemarks());
 	}
 }
