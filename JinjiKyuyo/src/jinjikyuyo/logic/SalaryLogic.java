@@ -1,7 +1,9 @@
 package jinjikyuyo.logic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jinjikyuyo.bean.SalaryBean;
 import jinjikyuyo.dao.SalaryDAO;
@@ -32,5 +34,17 @@ public class SalaryLogic {
 		}
 		
 		return reslt;
+	}
+	
+	public Map<Integer, Map<String, Integer>> getMonthryRemunerat(String targetYear) {
+		Map<Integer, Map<String, Integer>> resltMap = new HashMap<>();
+		
+		try {
+			resltMap = dao.selectMonthryRemunerat(targetYear);
+		} catch(Exception e) {
+			e.getStackTrace();
+		}
+		
+		return resltMap;
 	}
 }

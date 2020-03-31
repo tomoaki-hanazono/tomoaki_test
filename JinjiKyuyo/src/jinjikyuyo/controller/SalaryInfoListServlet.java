@@ -1,7 +1,6 @@
 package jinjikyuyo.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jinjikyuyo.bean.AddressBookBean;
 import jinjikyuyo.bean.SalaryBean;
 import jinjikyuyo.logic.SalaryLogic;
 
@@ -22,9 +20,7 @@ import jinjikyuyo.logic.SalaryLogic;
 public class SalaryInfoListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private List<String> message = new ArrayList<>();
 	private SalaryLogic logic = new SalaryLogic();
-	private OperatingTimeInputServlet oSerblet = new OperatingTimeInputServlet();
 	
     /**
      * @see HttpServlet#HttpServlet()

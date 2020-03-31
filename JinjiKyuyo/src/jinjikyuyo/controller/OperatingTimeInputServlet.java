@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import jinjikyuyo.bean.EmploymentInfoBean;
 import jinjikyuyo.logic.EmploymentInfoLogic;
 import jinjikyuyo.logic.IncomeTaxMasterLogic;
+import jinjikyuyo.logic.MonthryRemunerationInfoLogic;
 import jinjikyuyo.util.JinjikyuyoUtil;
 import jinjikyuyo.validator.CommonValidator;
 
@@ -27,6 +28,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 	private CommonValidator validator = new CommonValidator();
 	private EmploymentInfoLogic eLogic = new EmploymentInfoLogic();
 	private IncomeTaxMasterLogic iLogic = new IncomeTaxMasterLogic();
+	private MonthryRemunerationInfoLogic mLogic = new MonthryRemunerationInfoLogic();
 	private List<String> message = new ArrayList<>();
 	
 	private JinjikyuyoUtil util = new JinjikyuyoUtil();
@@ -113,6 +115,15 @@ public class OperatingTimeInputServlet extends HttpServlet {
 			message.add("稼働時間を入力してください。");
 		}
 		
+		int judgAmount = 0;
+		String targetYear;
+		if(Integer.parseInt(month) < 7) {
+			targetYear = String.valueOf(Integer.parseInt(year) - 1);
+		} else {
+			targetYear = year;
+		}
+		judgAmount = mLogic.getMonthryRemuneration(employeeId, targetYear);
+		
 		if (message.size() == 0) {
 			double operatingTime = Double.parseDouble(operatingTime1 + "." + operatingTime2);
 			EmploymentInfoBean employment = eLogic.getEmploymentInfo(employeeId);
@@ -151,6 +162,10 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				int incomeTax = 0;
 				int totalInsurance = 0;
 				int age = 0;
+
+				if(judgAmount == 0) {
+					judgAmount = totalPayment;
+				}
 		
 				if(month.compareTo(birthday.substring(4,6)) > 0) {
 					age = Integer.parseInt(year) - Integer.parseInt(birthday.substring(0,4)) - 1;
@@ -158,7 +173,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 					age = Integer.parseInt(year) - Integer.parseInt(birthday.substring(0,4));
 				}
 				
-				monthryRemuneration = util.searchMonthryRemuneration(totalPayment);
+				monthryRemuneration = util.searchMonthryRemuneration(judgAmount);
 				healthInsurance = util.getHealthInsurance(monthryRemuneration, year + month, age);
 				employeePension = util.getEmployeePension(monthryRemuneration, year + month);
 				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration, year + month);

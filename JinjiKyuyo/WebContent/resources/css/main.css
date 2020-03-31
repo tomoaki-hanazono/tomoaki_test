@@ -62,6 +62,19 @@ table.salaryAria {
 	width: 1200px;
 }
 
+table.monthryRemunerationAria {
+	width: 600px;
+}
+table.monthryRemunerationAria th.w0 {
+	width: 40px;
+}
+table.monthryRemunerationAria th.w1 {
+	width: 120px;
+}
+table.monthryRemunerationAria th.w2 {
+	width: 200px;
+}
+
 input[type="text"] {
 	width: 100%;
 }

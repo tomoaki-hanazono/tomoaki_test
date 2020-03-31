@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import jinjikyuyo.bean.SalaryBean;
 
@@ -75,6 +78,60 @@ public class SalaryDAO extends CommonDAO {
 		}
 		
 		return list;
+	}
+	
+	public Map<Integer, Map<String, Integer>> selectMonthryRemunerat(String targetYear) {
+		Map<Integer, Map<String, Integer>> resltMap = new HashMap<>();
+		Map<String, Integer>reslt;
+		Connection con = null;
+		
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT * FROM salary WHERE operating_month BETWEEN ? AND ?";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, targetYear + "04");
+			st.setString(2, targetYear + "06");
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+	        // データをセット
+			while (rs.next()) {
+				if(!resltMap.containsKey(rs.getInt("employee_id"))) {
+					reslt = new TreeMap<>();
+				} else {
+					reslt = resltMap.get(rs.getInt("employee_id"));
+				}
+				if(!reslt.containsKey(rs.getString("operating_month"))) {
+					reslt.put(rs.getString("operating_month"), rs.getInt("total_payment"));
+					resltMap.put(rs.getInt("employee_id"), reslt);
+				}
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		
+		return resltMap;
 	}
 	
 	public int insert(SalaryBean request) throws Exception {

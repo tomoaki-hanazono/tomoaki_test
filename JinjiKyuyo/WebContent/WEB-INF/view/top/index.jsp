@@ -15,6 +15,8 @@
 	<br>
 	<a href="./maintenance/changeRate" class="button">保険料率変更</a>
 	<br>
+	<a href="./monthryRemuneration/get" class="button">標準月額設定</a>
+	<br>
 </div>
 </body>
 </html>
