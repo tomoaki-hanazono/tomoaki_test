@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/addressbook/registJs.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/common.js"></script>
+<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <meta charset="UTF-8">
 <title>社員情報登録</title>
 </head>
@@ -97,7 +98,10 @@
 	</tr>
 	<tr id="zipCodeAria">
 		<th>郵便番号</th>
-		<td><input type="text" name="zipCode" class="numberAria" maxlength="7" onChange="checkNum(this)"></td>
+		<td>
+			<input type="text" name="zipCode" class="numberAria" maxlength="7" onChange="checkNum(this)">
+			<input type="button" name="sarch" class="button" value="検索" onClick="AjaxZip3.zip2addr('zipCode','','address1','address1');">
+		</td>
 	</tr>
 	<tr id="address1Aria">
 		<th>住所1</th>
@@ -105,7 +109,7 @@
 	</tr>
 	<tr id="address2Aria">
 		<th>住所2</th>
-		<td><input type="text" name="address2" placeholder="番地・建物名"></td>
+		<td><input type="text" name="address2" placeholder="丁目・番地・建物名"></td>
 	</tr>
 	<tr id="phoneNumberAria">
 		<th>固定電話番号</th>
