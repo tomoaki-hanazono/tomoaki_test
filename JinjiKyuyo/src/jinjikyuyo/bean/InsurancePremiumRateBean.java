@@ -1,10 +1,20 @@
 package jinjikyuyo.bean;
 
+/**
+ * 
+ * 保険料率Bean.
+ *
+ */
 public class InsurancePremiumRateBean implements java.io.Serializable {
+	// 保険ID
 	private String insuranceId;
+	// 適用開始月
 	private String startDate;
+	// 保険名
 	private String insuranceName;
+	// 保険料率
 	private int insurancePremiumRate1;
+	// 保険料率
 	private int insurancePremiumRate2;
 	public String getInsuranceId() {
 		return insuranceId;

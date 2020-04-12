@@ -17,14 +17,17 @@ import jinjikyuyo.logic.EmploymentInfoLogic;
 import jinjikyuyo.validator.CommonValidator;
 
 /**
- * Servlet implementation class EmploymentInfoConfirmServlet
+ * 雇用情報登録Servlet.
  */
 @WebServlet("/employmentInfo/confirm")
 public class EmploymentInfoConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	// 雇用情報Logic
 	private EmploymentInfoLogic logic = new EmploymentInfoLogic();
+	// バリデータ
 	private CommonValidator validator = new CommonValidator();
+	// メッセージ
 	private List<String> message = new ArrayList<>();
        
     /**
@@ -38,25 +41,35 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 文字コードを設定
 		request.setCharacterEncoding("utf-8");
 		
+		// 画面：社員番号
 		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
+		// 画面：社員名
 		String employeeName = request.getParameter("fullName_" + employeeId);
 		
+		// 雇用情報を取得
 		EmploymentInfoBean employmentInfo = logic.getEmploymentInfo(employeeId);
+		// 雇用情報履歴を取得
 		List<EmploymentInfoHistoryBean> employmentHistoryList = logic.getEmploymentInfoList(employeeId);
 		
+		// 雇用情報を画面に設定
 		request.setAttribute("employmentInfo", employmentInfo);
+		// 雇用情報履歴を画面に設定
 		request.setAttribute("employmentHistoryList", employmentHistoryList);
+		// 社員番号が未設定の場合、画面取得の社員番号を設定
 		if (request.getAttribute("employeeId") == null || request.getAttribute("employeeId").equals("")) {
 			request.setAttribute("employeeId", employeeId);
 		}
+		// 社員名が未設定の場合、画面取得の社員名を設定
 		if (request.getAttribute("employeeName") == null || request.getAttribute("employeeName").equals("") ) {
 			request.setAttribute("employeeName", employeeName);
 		}
-		
+		// メッセージを画面に設定
 		request.setAttribute("message", message);
 		
+		// 雇用情報画面
 		String view = "/WEB-INF/view/employmentinfo/confirm/confirm.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(view);
 
@@ -67,13 +80,19 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 文字コードをってい
 		request.setCharacterEncoding("utf-8");
 
+		// メッセージを初期化
 		message = new ArrayList<>();
+		// リクエスト（雇用情報）を初期化
 		EmploymentInfoBean employmentInfo = new EmploymentInfoBean();
+		// 画面：処理区分を取得
 		String type = request.getParameter("type");
 		
 		if (type.equals("add")) {
+			// 処理区分が追加の場合
+			// 画面から各入力値を取得
 			int employeeId = Integer.parseInt(request.getParameter("employeeId"));
 			String employeeName = request.getParameter("employeeName");
 			String startYear = request.getParameter("startYear");
@@ -96,6 +115,7 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 			String jobDescription = request.getParameter("jobDescription");
 			String remarks = request.getParameter("remarks");
 			
+			// 入力チェック
 			if (!validator.isRequired(startYear) || !validator.isRequired(startMonth)
 					|| !validator.isRequired(startDay) || !validator.isRequired(endYear)
 					|| !validator.isRequired(endMonth) || !validator.isRequired(endDay)) {
@@ -148,7 +168,9 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				message.add("控除は半角数値で入力してください。");
 			}
 			
+			// 入力エラーが無い場合
 			if (message.size() == 0) {
+				// リクエストに画面の各値を設定
 				employmentInfo.setEmployeeId(employeeId);
 				employmentInfo.setEmployeeName(employeeName);
 				employmentInfo.setEmploymentPeriodStart(employmentInfoPeriodStart);
@@ -165,17 +187,20 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				employmentInfo.setJobDescription(jobDescription);
 				employmentInfo.setRemarks(remarks);
 				
+				// 雇用情報を新規登録
 				int result = logic.registEmploymentInfo(employmentInfo);
 				
 				if (result == 0) {
 					message.add("雇用情報の登録に失敗しました。");
 				}
 			}
-			
+			// 画面に社員番号と社員名を設定
 			request.setAttribute("employeeId", employeeId);
 			request.setAttribute("employeeName", employeeName);
 			
 		} else if (type.equals("update")) {
+			// 処理区分が更新の場合
+			// 画面から各入力値を取得
 			int employeeId = Integer.parseInt(request.getParameter("employeeId"));
 			String employeeName = request.getParameter("employeeName");
 
@@ -198,6 +223,7 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 			String excessMoney = request.getParameter("excessMoney");
 			String eductionMoney = request.getParameter("eductionMoney");
 			
+			// 入力チェック
 			if (!validator.isRequired(startYear) || !validator.isRequired(startMonth)
 					|| !validator.isRequired(startDay) || !validator.isRequired(endYear)
 					|| !validator.isRequired(endMonth) || !validator.isRequired(endDay)) {
@@ -246,7 +272,9 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				message.add("控除は半角数値で入力してください。");
 			}
 			
+			// 入力エラーが無い場合
 			if (message.size() == 0) {
+				// リクエストに画面の値を設定
 				employmentInfo.setEmployeeId(employeeId);
 				employmentInfo.setEmployeeName(employeeName);
 				employmentInfo.setEmploymentPeriodStart(employmentInfoPeriodStart);
@@ -262,18 +290,20 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				employmentInfo.setEductionMoney(Integer.parseInt(eductionMoney));
 				employmentInfo.setJobDescription(null);
 				employmentInfo.setRemarks(null);
-					
+				
+				// 雇用情報を更新
 				int reslt = logic.updateEmploymentInfo(employmentInfo);
 				
 				if (reslt == 0) {
 					message.add("雇用情報の登録に失敗しました。");
 				}
 			}
-			
+			// 画面に社員番号と社員名を設定
 			request.setAttribute("employeeId", employeeId);
 			request.setAttribute("employeeName", employeeName);
 		}
 		
+		// 自画面に遷移
 		this.doGet(request, response);
 	}
 

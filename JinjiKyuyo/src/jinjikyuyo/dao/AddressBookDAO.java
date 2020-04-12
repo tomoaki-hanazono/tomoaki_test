@@ -10,11 +10,24 @@ import java.util.List;
 import jinjikyuyo.bean.AddressBookBean;
 import jinjikyuyo.dao.CommonDAO;
 
+/**
+ * 
+ * 住所録DAO.
+ *
+ */
 public class AddressBookDAO extends CommonDAO {
 
+	/**
+	 * 住所録登録処理
+	 * @param request 住所録
+	 * @return 登録結果
+	 * @throws Exception
+	 */
 	public int insert(AddressBookBean request) throws Exception {
 		
+		// コネクションを初期化
 		Connection con = null;
+		// 登録結果を初期化
 		int reslt = 0;
 		
 		try {
@@ -50,9 +63,11 @@ public class AddressBookDAO extends CommonDAO {
 
 			// 接続解除
 			st.close();
+			// コミット
 			con.commit();
 			
 		} catch (SQLException e) {
+			// ロールバック
 			con.rollback();
 			e.printStackTrace();
 		} finally {
@@ -70,8 +85,14 @@ public class AddressBookDAO extends CommonDAO {
 		return reslt;
 	}
 	
+	/**
+	 * 住所録リスト取得（全件）
+	 * @return 住所録リスト
+	 */
 	public List<AddressBookBean> selectAll() {
+		// 住所録リストを初期化
 		List<AddressBookBean> list = new ArrayList<>();
+		// コネクションを初期化
 		Connection con = null;
 		
 		try {
@@ -131,8 +152,15 @@ public class AddressBookDAO extends CommonDAO {
 		return list;
 	}
 	
+	/**
+	 * 登録件数確認 
+	 * @param request 住所録
+	 * @return 登録件数
+	 */
 	public int count(AddressBookBean request) {
+		// 登録件数を初期化
 		int count = 0;
+		// コネクションを初期化
 		Connection con = null;
 		
 		try {

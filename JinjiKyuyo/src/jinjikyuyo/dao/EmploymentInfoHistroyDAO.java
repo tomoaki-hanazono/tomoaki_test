@@ -9,10 +9,22 @@ import java.util.List;
 
 import jinjikyuyo.bean.EmploymentInfoHistoryBean;
 
+/**
+ * 
+ * 雇用情報履歴DAO.
+ *
+ */
 public class EmploymentInfoHistroyDAO extends CommonDAO {
 	
+	/**
+	 * 雇用情報履歴取得
+	 * @param employeeId 社員番号
+	 * @return 雇用情報履歴リスト
+	 */
 	public List<EmploymentInfoHistoryBean> selectForEmployeeId(int employeeId) {
+		// 雇用情報履歴リストを初期化
 		List<EmploymentInfoHistoryBean> list = new ArrayList<>();
+		// コネクションを初期化
 		Connection con = null;
 		
 		try {
@@ -71,8 +83,16 @@ public class EmploymentInfoHistroyDAO extends CommonDAO {
 		return list;
 	}
 	
+	/**
+	 * 雇用情報履歴登録
+	 * @param request 雇用情報履歴
+	 * @return 登録結果
+	 * @throws Exception
+	 */
 	public int insert(EmploymentInfoHistoryBean request) throws Exception {
+		// コネクションを初期化
 		Connection con = null;
+		// 登録結果を初期化
 		int reslt = 0;
 		
 		try {
@@ -106,22 +126,23 @@ public class EmploymentInfoHistroyDAO extends CommonDAO {
 
 			// 接続解除
 			st.close();
+			// コミット
 			con.commit();
 			
 		} catch (SQLException e) {
+			// ロールバック
 			con.rollback();
 			e.printStackTrace();
 		} finally {
 			if (con != null){
 				try{
+					// 接続解除
 					con.close();
 	        	} catch (SQLException e){
 	        		e.printStackTrace();
 	        	}
 			}
 		}
-		
-       con.close();		
 		
 		return reslt;		
 	}

@@ -8,10 +8,22 @@ import java.util.List;
 
 import jinjikyuyo.bean.EmploymentInfoBean;
 
+/**
+ * 
+ * 雇用情報DAO.
+ *
+ */
 public class EmploymentInfoDAO extends CommonDAO {
 	
+	/**
+	 * 雇用情報取得
+	 * @param employeeId 社員番号
+	 * @return 雇用情報
+	 */
 	public EmploymentInfoBean selectForEmployeeId(int employeeId) {
+		// 雇用情報を初期化
 		EmploymentInfoBean employmentInfo = null;
+		// コネクションを初期化
 		Connection con = null;
 		
 		try {
@@ -69,8 +81,16 @@ public class EmploymentInfoDAO extends CommonDAO {
 		return employmentInfo;
 	}
 
+	/**
+	 * 雇用情報登録
+	 * @param request 雇用情報
+	 * @return 登録結果
+	 * @throws Exception
+	 */
 	public int insert(EmploymentInfoBean request) throws Exception {
+		// コネクションを初期化
 		Connection con = null;
+		// 処理結果を初期化
 		int reslt = 0;
 		
 		try {
@@ -104,14 +124,17 @@ public class EmploymentInfoDAO extends CommonDAO {
 
 			// 接続解除
 			st.close();
+			// コミット
 			con.commit();
 			
 		} catch (SQLException e) {
+			// ロールバック
 			con.rollback();
 			e.printStackTrace();
 		} finally {
 			if (con != null){
 				try{
+					// 接続解除
 					con.close();
 	        	} catch (SQLException e){
 	        		e.printStackTrace();
@@ -119,13 +142,19 @@ public class EmploymentInfoDAO extends CommonDAO {
 			}
 		}
 		
-       con.close();		
-		
 		return reslt;		
 	}
 	
+	/**
+	 * 雇用情報更新
+	 * @param request 雇用情報
+	 * @return 登録結果
+	 * @throws Exception
+	 */
 	public int update(EmploymentInfoBean request) throws Exception {
+		// コネクションを初期化
 		Connection con = null;
+		// 登録結果を初期化
 		int reslt = 0;
 		
 		try {
@@ -164,22 +193,23 @@ public class EmploymentInfoDAO extends CommonDAO {
 
 			// 接続解除
 			st.close();
+			// コミット
 			con.commit();
 			
 		} catch (SQLException e) {
+			// ロールバック
 			con.rollback();
 			e.printStackTrace();
 		} finally {
 			if (con != null){
 				try{
+					// 接続解除
 					con.close();
 	        	} catch (SQLException e){
 	        		e.printStackTrace();
 	        	}
 			}
 		}
-		
-		con.close();		
 		
 		return reslt;
 	}

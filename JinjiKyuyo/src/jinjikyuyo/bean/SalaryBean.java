@@ -1,27 +1,54 @@
 package jinjikyuyo.bean;
 
+/**
+ * 
+ * 給与Bean.
+ *
+ */
 public class SalaryBean implements java.io.Serializable {
+	// 社員番号
 	private int employeeId;
+	// 稼働月
 	private String operatingMonth;
+	// 稼働時間
 	private double operatingTime;
+	// 超過時間
 	private double upperTime;
+	// 不足時間
 	private double lowarTime;
+	// 基本給
 	private int basicSalary;
+	// 職務手当
 	private int dutiesAllowance;
+	// 通勤手当
 	private int commutingAllowance;
+	// 時間外手当
 	private int overtimeAllowance;
+	// その他手当
 	private int otherAllowance;
+	// 超過金額
 	private int excessMoney;
+	// 控除金額
 	private int eductionMoney;
+	// 下限基準時間
 	private int lowerLimit;
+	// 上限基準時間
 	private int upperLimit;
+	// 健康保険
 	private int healthInsurance;
+	// 厚生年金
 	private int employeePension;
+	// 雇用保険
 	private int employmentInsurance;
+	// 所得税
 	private int incomeTax;
+	// 時間不足控除
 	private int shortageDeduction;
+	// 総支給額
 	private int totalPayment;
+	// 控除合計額
 	private int totalDeduction;
+	// 差引支給額
 	private int payment;
 	public int getEmployeeId() {
 		return employeeId;

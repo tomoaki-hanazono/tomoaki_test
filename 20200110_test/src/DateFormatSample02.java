@@ -1,35 +1,44 @@
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class DateFormatSample02 {
 	public static void main(String[] args) {
-		// ロケールの設定（和暦用のロケール）
-		Locale locale = new Locale("ja","JP","JP");
-		// カレンダーオブジェクトの生成
-		Calendar cal = Calendar.getInstance();
-		
-		// 和暦のロケールを指定して年をフォーマットする
-		SimpleDateFormat sdf = new SimpleDateFormat("GGGGy年",locale);
-		String dateStr = sdf.format(cal.getTime());
-		
-		// フォーマットされた日付の表示
-		System.out.println(dateStr);
-		// 年の短縮名を表示
-		sdf.applyPattern("Gy");
-		dateStr = sdf.format(cal.getTime());
-		System.out.println(dateStr);
-		
-		// 1年前の和暦を表示してみる
-		sdf.applyPattern("GGGGy年");
-		cal.add(Calendar.YEAR, -1);
-		dateStr = sdf.format(cal.getTime());
-		System.out.println(dateStr);
-		
-		// 100年前の和暦を表示してみる
-		sdf.applyPattern("GGGGy年");
-		cal.add(Calendar.YEAR, -100);
-		dateStr = sdf.format(cal.getTime());
-		System.out.println(dateStr);
+		try {
+			// ロケールの設定（和暦用のロケール）
+			Locale locale = new Locale("ja","JP","JP");
+			// カレンダーオブジェクトの生成
+			Calendar cal = Calendar.getInstance();
+			
+			String year = "2020";
+			SimpleDateFormat sd = new SimpleDateFormat("yyyy");
+			Date date = sd.parse(year);
+			
+			// 和暦のロケールを指定して年をフォーマットする
+			SimpleDateFormat sdf = new SimpleDateFormat("GGGGy年",locale);
+			String dateStr = sdf.format(date);
+			
+			// フォーマットされた日付の表示
+			System.out.println(dateStr);
+			// 年の短縮名を表示
+			sdf.applyPattern("Gy");
+			dateStr = sdf.format(date);
+			System.out.println(dateStr);
+			
+			// 1年前の和暦を表示してみる
+			sdf.applyPattern("GGGGy年");
+			cal.add(Calendar.YEAR, -1);
+			dateStr = sdf.format(cal.getTime());
+			System.out.println(dateStr);
+			
+			// 100年前の和暦を表示してみる
+			sdf.applyPattern("GGGGy年");
+			cal.add(Calendar.YEAR, -100);
+			dateStr = sdf.format(cal.getTime());
+			System.out.println(dateStr);
+		} catch(Exception e) {
+			e.getStackTrace();
+		}
 	}
 }

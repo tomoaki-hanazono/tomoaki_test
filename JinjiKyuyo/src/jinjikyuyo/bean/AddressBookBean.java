@@ -1,23 +1,46 @@
 package jinjikyuyo.bean;
 
+/**
+ * 
+ * 住所録Bean.
+ *
+ */
 public class AddressBookBean implements java.io.Serializable {
+	// 社員番号
 	private int employeeId;
+	// 氏名
 	private String fullName;
+	// 姓
 	private String familyName;
+	// 名
 	private String firstName;
+	// フリガナ
 	private String nameKana;
+	// 誕生日
 	private String birthday;
+	// 郵便番号
 	private String zipCode;
+	// 住所1
 	private String address1;
+	// 住所2
 	private String address2;
+	// 固定電話番号
 	private String phoneNumber;
+	// 携帯電話番号
 	private String mobileNumber;
+	// メールアドレス
 	private String mailAddress;
+	// 会社名
 	private String company;
+	// 部署
 	private String department;
+	// 役職
 	private String position;
+	// 敬称
 	private String keishou;
+	// 備考
 	private String remarks;
+	// 扶養家族
 	private String dependents;
 	
 	public int getEmployeeId() {

@@ -1,8 +1,16 @@
 package jinjikyuyo.bean;
 
+/**
+ * 
+ * 標準月額情報Bean.
+ *
+ */
 public class MonthryRemunerationInfoBean implements java.io.Serializable {
+	// 社員番号
 	private int employeeId;
+	// 対象年度
 	private String targetYear;
+	// 標準月額
 	private int monthryRemuneration;
 	public int getEmployeeId() {
 		return employeeId;
