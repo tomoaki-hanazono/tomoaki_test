@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jinjikyuyo.bean.SalaryBean;
+import jinjikyuyo.logic.IncomeTaxMasterLogic;
 import jinjikyuyo.logic.SalaryLogic;
+import jinjikyuyo.util.JinjikyuyoUtil;
 
 /**
  * Servlet implementation class SalaryInfoRegistServlet
@@ -22,7 +24,9 @@ public class SalaryInfoRegistServlet extends HttpServlet {
     
 	private List<String> message = new ArrayList<>();
 	private SalaryLogic logic = new SalaryLogic();
+	private IncomeTaxMasterLogic iLogic = new IncomeTaxMasterLogic();
 	private OperatingTimeInputServlet oSerblet = new OperatingTimeInputServlet();
+	private JinjikyuyoUtil util = new JinjikyuyoUtil();
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -104,6 +108,27 @@ public class SalaryInfoRegistServlet extends HttpServlet {
 		}
 		// 住民税
 		int residentTax = Integer.parseInt(request.getParameter("residentTax"));
+		
+		if(poolFlag.equals("1")) {
+			String dependents = request.getParameter("dependents");
+			totalPayment = totalPayment - overtimeAllowance;
+			String year = request.getParameter("year");
+			String month = request.getParameter("month");
+			String targetYear;
+			int totalInsurance = 0;
+			int otherPayment = 0;
+			if(Integer.parseInt(month) < 9) {
+				targetYear = String.valueOf(Integer.parseInt(year) - 1);
+			} else {
+				targetYear = year;
+			}
+			employmentInsurance = util.getEmploymentInsurance(totalPayment, targetYear + month);
+			totalInsurance = healthInsurance + employeePension + employmentInsurance;
+			otherPayment = totalPayment - totalInsurance - shortageDeduction;
+			incomeTax = iLogic.getIncomeTax(otherPayment, dependents);
+			totalDeduction = totalInsurance + shortageDeduction + incomeTax;
+			payment = otherPayment - incomeTax;
+		}
 		
 		SalaryBean salary = new SalaryBean();
 		salary.setEmployeeId(employeeId);
