@@ -215,7 +215,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				monthryRemuneration = util.searchMonthryRemuneration(judgAmount);
 				healthInsurance = util.getHealthInsurance(monthryRemuneration, targetYear + month, age);
 				employeePension = util.getEmployeePension(monthryRemuneration, targetYear + month);
-				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration, targetYear + month);
+				employmentInsurance = util.getEmploymentInsurance(totalPayment, targetYear + month);
 				totalInsurance = healthInsurance + employeePension + employmentInsurance;
 				otherPayment = totalPayment - totalInsurance - shortageDeduction;
 				incomeTax = iLogic.getIncomeTax(otherPayment, dependents);
