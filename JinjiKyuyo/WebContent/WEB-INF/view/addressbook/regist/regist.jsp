@@ -42,6 +42,11 @@
 	<tr id="birthdayAria">
 		<th>生年月日</th>
 		<td>
+			<select name="wareki" id="wareki" onChange="changeWreki(this)">
+				<option value="R">令和</option>
+				<option value="H">平成</option>
+				<option value="S">昭和</option>
+			</select>
 			<select name="year" id="year">
 				<option value=""></option>
 			</select>年

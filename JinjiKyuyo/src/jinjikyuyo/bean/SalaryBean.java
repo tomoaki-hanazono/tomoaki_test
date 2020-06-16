@@ -50,6 +50,10 @@ public class SalaryBean implements java.io.Serializable {
 	private int totalDeduction;
 	// 差引支給額
 	private int payment;
+	// プールフラグ
+	private String poolFlag;
+	// 住民税
+	private int residentTax;
 	public int getEmployeeId() {
 		return employeeId;
 	}
@@ -181,5 +185,17 @@ public class SalaryBean implements java.io.Serializable {
 	}
 	public void setPayment(int payment) {
 		this.payment = payment;
+	}
+	public String getPoolFlag() {
+		return poolFlag;
+	}
+	public void setPoolFlag(String poolFlag) {
+		this.poolFlag = poolFlag;
+	}
+	public int getResidentTax() {
+		return residentTax;
+	}
+	public void setResidentTax(int residentTax) {
+		this.residentTax = residentTax;
 	}
 }

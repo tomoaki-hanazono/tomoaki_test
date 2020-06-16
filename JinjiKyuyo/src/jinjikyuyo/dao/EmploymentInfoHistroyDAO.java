@@ -60,6 +60,7 @@ public class EmploymentInfoHistroyDAO extends CommonDAO {
 				employment.setUpperLimit(rs.getInt("upper_limit"));
 				employment.setJobDescription(rs.getString("job_description"));
 				employment.setRemarks(rs.getString("remarks"));
+				employment.setResidentTax(rs.getInt("resident_tax"));
 				list.add(employment);
 			}
 			
@@ -101,7 +102,7 @@ public class EmploymentInfoHistroyDAO extends CommonDAO {
 			con.setAutoCommit(false);
 			
 			// SQL文作成
-			String sql = "insert into employment_info_history values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into employment_info_history values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			// SQL作成
 			PreparedStatement st = con.prepareStatement(sql);
@@ -120,6 +121,7 @@ public class EmploymentInfoHistroyDAO extends CommonDAO {
 			st.setInt(13, request.getUpperLimit());
 			st.setString(14, request.getJobDescription());
 			st.setString(15, request.getRemarks());
+			st.setInt(16, request.getResidentTax());
 			
 			// SQL実行
 			reslt = st.executeUpdate();

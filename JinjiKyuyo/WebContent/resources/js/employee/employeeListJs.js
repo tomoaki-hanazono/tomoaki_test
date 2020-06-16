@@ -27,7 +27,7 @@ function moveNext($this) {
 		hidden.value = "employmentInfo";
 	} else if($this.value == "作業時間入力") {
 		hidden.value = "operatingTime";
-	} else if($this.value == "給与情報一覧") {
+	} else if($this.value == "個別給与情報一覧") {
 		hidden.value = "salaryInfo";
 	}
 	

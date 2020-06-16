@@ -24,6 +24,12 @@ public class InsurancePremiumRateLogic {
 		return reslt;
 	}
 	
+	/**
+	 * 保険料率取得処理
+	 * @param insuranceId
+	 * @param targetDate
+	 * @return
+	 */
 	public double getInsurancePremiumRate(String insuranceId, String targetDate) {
 		double insurancePremiumRate = 0;
 		InsurancePremiumRateBean reslt = new InsurancePremiumRateBean();

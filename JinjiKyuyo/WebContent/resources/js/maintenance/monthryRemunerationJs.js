@@ -1,14 +1,40 @@
 window.onload = function() {
-	var now = new Date();
-	var nowYear = now.getYear();
-	if(nowYear < 2000) { nowYear += 1900; }
+	var wareki = document.getElementById("wareki");
+	changeWreki(wareki)
+}
+
+function changeWreki($this) {
+	var wareki = $this.value;
 	var select = document.getElementById("year");
-	var maxYear = nowYear + 3;
+	removeChildren(select);
 	
-	for (let i = 7; i >= 0; i--) {
+	if(wareki == "R") {
+		var startYear = 2019;
+		var now = new Date();
+		var lastYear = now.getYear();
+		if(lastYear < 2000) { lastYear += 1900; }
+		var lastYearText = lastYear-startYear+1;
+	} else if (wareki == "H") {
+		var startYear = 2016;
+		var lastYear = 2019;
+		var lastYearText = 31;
+	}
+	
+	while(lastYear >= startYear) {
 		var option = document.createElement("option");
-		option.text = maxYear - i;
-		option.value = maxYear - i;
+		option.text = lastYearText;
+		option.value = lastYear;
 		select.appendChild(option);
+		lastYearText--;
+		lastYear--;
+	}
+}
+
+function removeChildren(x)
+{
+	if (x.hasChildNodes()) {
+		while (x.childNodes.length > 0) {
+			x.removeChild(x.firstChild)
+		}
 	}
 }

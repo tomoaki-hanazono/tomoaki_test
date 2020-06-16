@@ -97,6 +97,13 @@ public class SalaryInfoRegistServlet extends HttpServlet {
 		int excessMoney = Integer.parseInt(request.getParameter("excessMoney"));
 		// 控除
 		int eductionMoney = Integer.parseInt(request.getParameter("eductionMoney"));
+		// プールフラグ
+		String poolFlag = request.getParameter("poolFlag");
+		if (poolFlag == null) {
+			poolFlag = "0";
+		}
+		// 住民税
+		int residentTax = Integer.parseInt(request.getParameter("residentTax"));
 		
 		SalaryBean salary = new SalaryBean();
 		salary.setEmployeeId(employeeId);
@@ -121,6 +128,8 @@ public class SalaryInfoRegistServlet extends HttpServlet {
 		salary.setTotalPayment(totalPayment);
 		salary.setTotalDeduction(totalDeduction);
 		salary.setPayment(payment);
+		salary.setPoolFlag(poolFlag);
+		salary.setResidentTax(residentTax);
 		
 		int reslt = logic.registSalaryInfo(salary);
 		

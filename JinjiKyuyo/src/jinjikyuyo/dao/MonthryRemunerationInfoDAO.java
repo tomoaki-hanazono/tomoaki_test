@@ -9,7 +9,12 @@ import java.util.List;
 import jinjikyuyo.bean.MonthryRemunerationInfoBean;
 
 public class MonthryRemunerationInfoDAO extends CommonDAO {
-	
+	/**
+	 * 標準月額取得処理
+	 * @param employeeId 社員番号
+	 * @param year 対象年
+	 * @return 標準月額
+	 */
 	public int selectMonthryRemuneration(int employeeId, String year) {
 		int reslt = 0;
 		Connection con = null;

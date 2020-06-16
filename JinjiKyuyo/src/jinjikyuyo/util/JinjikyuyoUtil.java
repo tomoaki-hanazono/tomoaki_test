@@ -72,7 +72,11 @@ public class JinjikyuyoUtil {
 	private static final String CARE_INSURANCE = "care_insurance";
 	private static final String EMPLOYEE_PENSION = "employee_pension";
 	private static final String EMPLOYMENT_INSURANCE = "employment_insurance";
-	
+	/**
+	 * 標準月額設定
+	 * @param totalPayment
+	 * @return
+	 */
 	public int searchMonthryRemuneration(int totalPayment) {
 		int monthryRemuneration = 0;
 		int lower = 0;
@@ -101,10 +105,18 @@ public class JinjikyuyoUtil {
 		return monthryRemuneration;
 	}
 	
-	
+	/**
+	 * 健康保険料計算処理
+	 * @param monthryRemuneration
+	 * @param targetDate
+	 * @param age
+	 * @return
+	 */
 	public int getHealthInsurance(int monthryRemuneration, String targetDate, int age) {
 		int healthInsurance = 0;
+		// 健康保険料率取得
 		double healthInsuranceRate = logic.getInsurancePremiumRate(HEALTH_INSURANCE, targetDate);
+		// 介護保険料率取得
 		double careInsuranceRate = logic.getInsurancePremiumRate(CARE_INSURANCE, targetDate);
 		if (40 <= age) {
 			healthInsurance = (int)Math.round(monthryRemuneration * (healthInsuranceRate + careInsuranceRate) / 100 / 2);
@@ -115,8 +127,15 @@ public class JinjikyuyoUtil {
 		return healthInsurance;
 	}
 	
+	/**
+	 * 厚生年金保険料計算処理
+	 * @param monthryRemuneration
+	 * @param targetDate
+	 * @return
+	 */
 	public int getEmployeePension(int monthryRemuneration, String targetDate) {
 		int employeePension = 0;
+		// 厚生年金保険料率取得処理
 		double employeePensionRate = logic.getInsurancePremiumRate(EMPLOYEE_PENSION, targetDate);
 		if (monthryRemuneration < 88000) {
 			monthryRemuneration = 88000;
@@ -128,8 +147,15 @@ public class JinjikyuyoUtil {
 		return employeePension;
 	}
 	
+	/**
+	 * 雇用保険料計算処理
+	 * @param monthryRemuneration
+	 * @param targetDate
+	 * @return
+	 */
 	public int getEmploymentInsurance(int monthryRemuneration, String targetDate) {
 		int employmentInsurance = 0;
+		// 雇用保険料率取得処理
 		double employmentInsuranceRate = logic.getInsurancePremiumRate(EMPLOYMENT_INSURANCE, targetDate);
 		employmentInsurance = (int)Math.round(monthryRemuneration * employmentInsuranceRate);
 		

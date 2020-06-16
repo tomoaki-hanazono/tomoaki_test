@@ -30,7 +30,11 @@
 	<% } %>
 </div>
 <form method="post" action="/JinjiKyuyo/monthryRemuneration/get" class="center">
-	対象年度：<select name="year" id="year">
+	対象年度：<select name="wareki" id="wareki" onChange="changeWreki(this)">
+		<option value="R">令和</option>
+		<option value="H">平成</option>
+	</select>
+	<select name="year" id="year">
 		<option value=""></option>
 	</select>年
 	<input type="submit" name="get" value="確認" class="button">

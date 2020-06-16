@@ -38,6 +38,8 @@ public class EmploymentInfoHistoryBean implements java.io.Serializable {
 	private String jobDescription;
 	// 備考
 	private String remarks;
+	// 住民税
+	private int residentTax;
 	public int getHistoryId() {
 		return historyId;
 	}
@@ -135,6 +137,12 @@ public class EmploymentInfoHistoryBean implements java.io.Serializable {
 		this.remarks = remarks;
 	}
 
+	public int getResidentTax() {
+		return residentTax;
+	}
+	public void setResidentTax(int residentTax) {
+		this.residentTax = residentTax;
+	}
 	public void set(EmploymentInfoBean before) {
 		this.setEmployeeId(before.getEmployeeId());
 		this.setEmployeeName(before.getEmployeeName());
@@ -151,5 +159,6 @@ public class EmploymentInfoHistoryBean implements java.io.Serializable {
 		this.setUpperLimit(before.getUpperLimit());
 		this.setJobDescription(before.getJobDescription());
 		this.setRemarks(before.getRemarks());
+		this.setResidentTax(before.getResidentTax());
 	}
 }

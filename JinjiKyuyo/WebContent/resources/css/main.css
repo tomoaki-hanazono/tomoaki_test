@@ -62,6 +62,45 @@ table.salaryAria {
 	width: 1200px;
 }
 
+table.salaryTitelAria {
+	border: none;
+	margin-bottom: 0px;
+	width: 1500px;
+}
+
+table.salaryTitelAria th {
+	text-align: left;
+	border: none;
+}
+
+table.salaryTitelAria td {
+	border: none;
+}
+
+table.salaryTitelAria th.title {
+	width: 840px;
+	font-size: 30px;
+	text-align: center;
+}
+
+table.payslipAria {
+	border: solid 3px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	border-collapse: collapse;
+	width: 1500px;
+}
+
+table.payslipAria th {
+	width: 100px;
+}
+
+table.payslipAria td {
+	text-align:right;
+	width: 100px;
+}
+
 table.monthryRemunerationAria {
 	width: 600px;
 }
@@ -137,4 +176,8 @@ input.dayAria {
 
 .noDisplay {
 	display: none;
+}
+
+@media print{
+  .noPrint{display:none;}       /* 印刷しない */
 }

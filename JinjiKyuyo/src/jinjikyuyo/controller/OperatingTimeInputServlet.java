@@ -15,6 +15,7 @@ import jinjikyuyo.bean.EmploymentInfoBean;
 import jinjikyuyo.logic.EmploymentInfoLogic;
 import jinjikyuyo.logic.IncomeTaxMasterLogic;
 import jinjikyuyo.logic.MonthryRemunerationInfoLogic;
+import jinjikyuyo.logic.SalaryLogic;
 import jinjikyuyo.util.JinjikyuyoUtil;
 import jinjikyuyo.validator.CommonValidator;
 
@@ -29,6 +30,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 	private EmploymentInfoLogic eLogic = new EmploymentInfoLogic();
 	private IncomeTaxMasterLogic iLogic = new IncomeTaxMasterLogic();
 	private MonthryRemunerationInfoLogic mLogic = new MonthryRemunerationInfoLogic();
+	private SalaryLogic sLogic = new SalaryLogic();
 	private List<String> message = new ArrayList<>();
 	
 	private JinjikyuyoUtil util = new JinjikyuyoUtil();
@@ -45,10 +47,13 @@ public class OperatingTimeInputServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
+		// 社員ID
 		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
+		// 社員名
 		String employeeName = request.getParameter("fullName_" + employeeId);
+		// 誕生日
 		String birthday = request.getParameter("birthday_" + employeeId);
+		// 扶養家族
 		String dependents = request.getParameter("dependents_" + employeeId);
 		
 		if (request.getAttribute("employeeId") == null || request.getAttribute("employeeId").equals("")) {
@@ -79,7 +84,7 @@ public class OperatingTimeInputServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		message = new ArrayList<>();
-		
+		// 画面項目を取得
 		String employeeName = request.getParameter("employeeName");
 		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
 		String birthday = request.getParameter("birthday");
@@ -115,32 +120,54 @@ public class OperatingTimeInputServlet extends HttpServlet {
 			message.add("稼働時間を入力してください。");
 		}
 		
-		int judgAmount = 0;
-		String targetYear;
-		if(Integer.parseInt(month) < 7) {
-			targetYear = String.valueOf(Integer.parseInt(year) - 1);
-		} else {
-			targetYear = year;
-		}
-		judgAmount = mLogic.getMonthryRemuneration(employeeId, targetYear);
-		
 		if (message.size() == 0) {
+			
+			// 基準標準月額
+			int judgAmount = 0;
+			// 対象年
+			String targetYear;
+			if(Integer.parseInt(month) < 9) {
+				targetYear = String.valueOf(Integer.parseInt(year) - 1);
+			} else {
+				targetYear = year;
+			}
+			// 標準月額取得
+			judgAmount = mLogic.getMonthryRemuneration(employeeId, targetYear);
+			
+			// 稼働時間
 			double operatingTime = Double.parseDouble(operatingTime1 + "." + operatingTime2);
+			// 雇用情報取得
 			EmploymentInfoBean employment = eLogic.getEmploymentInfo(employeeId);
 			
 			if (employment != null && employment.getEmployeeId() != 0) {
+				// 基本給
 				int basicSalary = employment.getBasicSalary();
+				// 職務手当
 				int dutiesAllowance = employment.getDutiesAllowance();
+				// 通勤手当
 				int commutingAllowance = employment.getCommutingAllowance();
+				// 時間外手当
 				int overtimeAllowance = 0;
+				// その他手当
 				int otherAllowance = employment.getOtherAllowance();
+				// 超過金額
 				int excessMoney = employment.getExcessMoney();
+				// 控除金額
 				int eductionMoney = employment.getEductionMoney();
+				// 下限基準時間
 				int lowerLimit = employment.getLowerLimit();
+				// 上限基準時間
 				int upperLimit = employment.getUpperLimit();
+				// 時間不足控除
 				int shortageDeduction = 0;
+				// 下限時間
 				double lowarTime = 0;
+				// 上限時間
 				double upperTime = 0;
+				// 市民税
+				int residentTax = employment.getResidentTax();
+				// 前月プールフラグ
+				String beforePoolFlag = sLogic.getBeforePoolFlag(employeeId, year + request.getParameter("month"));
 				
 				if(lowerLimit > operatingTime) {
 					lowarTime = lowerLimit - operatingTime;
@@ -150,17 +177,29 @@ public class OperatingTimeInputServlet extends HttpServlet {
 					overtimeAllowance = (int)Math.round(upperTime * excessMoney);
 				}
 				
-				int totalPayment = basicSalary + dutiesAllowance + commutingAllowance + overtimeAllowance + otherAllowance;
-				int monthryRemuneration = 0;
+				if("07".equals(month) || "08".equals(month) || "09".equals(month)) {
+					String poolMonth = "0" + String.valueOf(Integer.parseInt(month) - 3);
+					String poolYm = year + poolMonth.substring(poolMonth.length() - 2);
+					int poolOvertimeAllowance = sLogic.getPoolOvertimeAllowance(employeeId, poolYm);
+					overtimeAllowance = overtimeAllowance + poolOvertimeAllowance;
+				}
 				
+				// 総支給額
+				int totalPayment = basicSalary + dutiesAllowance + commutingAllowance + overtimeAllowance + otherAllowance;
+				// 標準月額
+				int monthryRemuneration = 0;
+				// 健康保険料
 				int healthInsurance = 0;
+				// 厚生年金保険料
 				int employeePension = 0;
+				// 雇用保険料
 				int employmentInsurance = 0;
 				int totalDeduction = 0;
 				int otherPayment = 0;
 				int payment = 0;
 				int incomeTax = 0;
 				int totalInsurance = 0;
+				// 年齢
 				int age = 0;
 
 				if(judgAmount == 0) {
@@ -174,9 +213,9 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				}
 				
 				monthryRemuneration = util.searchMonthryRemuneration(judgAmount);
-				healthInsurance = util.getHealthInsurance(monthryRemuneration, year + month, age);
-				employeePension = util.getEmployeePension(monthryRemuneration, year + month);
-				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration, year + month);
+				healthInsurance = util.getHealthInsurance(monthryRemuneration, targetYear + month, age);
+				employeePension = util.getEmployeePension(monthryRemuneration, targetYear + month);
+				employmentInsurance = util.getEmploymentInsurance(monthryRemuneration, targetYear + month);
 				totalInsurance = healthInsurance + employeePension + employmentInsurance;
 				otherPayment = totalPayment - totalInsurance - shortageDeduction;
 				incomeTax = iLogic.getIncomeTax(otherPayment, dependents);
@@ -227,6 +266,10 @@ public class OperatingTimeInputServlet extends HttpServlet {
 				request.setAttribute("excessMoney", String.valueOf(excessMoney));
 				// 控除
 				request.setAttribute("eductionMoney", String.valueOf(eductionMoney));
+				// 住民税
+				request.setAttribute("residentTax", String.valueOf(residentTax));
+				// 前月プールフラグ
+				request.setAttribute("beforePoolFlag", String.valueOf(beforePoolFlag));
 			} else {
 				message.add("雇用情報がありません。");
 			}

@@ -6,36 +6,38 @@ package jinjikyuyo.bean;
  *
  */
 public class EmploymentInfoBean implements java.io.Serializable {
-	// 社員番号
+	/** 社員番号 */
 	private int employeeId;
-	// 社員名
+	/** 社員名 */
 	private String employeeName;
-	// 雇用開始日
+	/** 雇用開始日 */
 	private String employmentPeriodStart;
-	// 雇用終了日
+	/** 雇用終了日 */
 	private String employmentPeriodEnd;
-	// 基本給
+	/** 基本給 */
 	private int basicSalary;
-	// 職務手当
+	/** 職務手当 */
 	private int dutiesAllowance;
-	// 通勤手当
+	/** 通勤手当 */
 	private int commutingAllowance;
-	// 時間外手当
+	/** 時間外手当 */
 	private int overtimeAllowance;
-	// その他手当
+	/** その他手当 */
 	private int otherAllowance;
-	// 超過金額
+	/** 超過金額 */
 	private int excessMoney;
-	// 控除金額
+	/** 控除金額 */
 	private int eductionMoney;
-	// 下限基準時間
+	/** 下限基準時間 */
 	private int lowerLimit;
-	// 上限基準時間
+	/** 上限基準時間 */
 	private int upperLimit;
-	// 職務内容
+	/** 職務内容 */
 	private String jobDescription;
-	// 備考
+	/** 備考 */
 	private String remarks;
+	/** 住民税 */
+	private int residentTax;
 	public int getEmployeeId() {
 		return employeeId;
 	}
@@ -125,5 +127,11 @@ public class EmploymentInfoBean implements java.io.Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public int getResidentTax() {
+		return residentTax;
+	}
+	public void setResidentTax(int residentTax) {
+		this.residentTax = residentTax;
 	}
 }

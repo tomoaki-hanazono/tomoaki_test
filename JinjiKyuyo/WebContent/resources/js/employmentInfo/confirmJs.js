@@ -1,22 +1,52 @@
 window.onload = function() {
-	var now = new Date();
-	var nowYear = now.getYear();
-	if(nowYear < 2000) { nowYear += 1900; }
+	var warekiS = document.getElementById("startWareki").value;
+	var warekiE = document.getElementById("endWareki").value;
 	var selectS = document.getElementById("startYear");
 	var selectE = document.getElementById("endYear");
-	var maxYear = nowYear + 3;
+	changeWreki(warekiS,selectS);
+	changeWreki(warekiE,selectE);
+}
+
+function changeSWareki($this) {
+	var wareki = $this.value;
+	var select = document.getElementById("startYear");
+	changeWreki(wareki,select);
+}
+function changeEWareki($this) {
+	var wareki = $this.value;
+	var select = document.getElementById("endYear");
+	changeWreki(wareki,select);
+}
+function changeWreki(wareki,select) {
+	removeChildren(select);
 	
-	if(selectS != null && selectE != null) {
-		for (let i = 7; i >= 0; i--) {
-			var optionS = document.createElement("option");
-			optionS.text = maxYear - i;
-			optionS.value = maxYear - i;
-			selectS.appendChild(optionS);
-			
-			var optionE = document.createElement("option");
-			optionE.text = maxYear - i;
-			optionE.value = maxYear - i;
-			selectE.appendChild(optionE);
+	if(wareki == "R") {
+		var startYear = 2019;
+		var now = new Date();
+		var lastYear = now.getYear();
+		if(lastYear < 2000) { lastYear += 1900; }
+		var lastYearText = lastYear-startYear+1;
+	} else if (wareki == "H") {
+		var startYear = 2016;
+		var lastYear = 2019;
+		var lastYearText = 31;
+	}
+	
+	while(lastYear >= startYear) {
+		var option = document.createElement("option");
+		option.text = lastYearText;
+		option.value = lastYear;
+		select.appendChild(option);
+		lastYearText--;
+		lastYear--;
+	}
+}
+
+function removeChildren(x)
+{
+	if (x.hasChildNodes()) {
+		while (x.childNodes.length > 0) {
+			x.removeChild(x.firstChild)
 		}
 	}
 }

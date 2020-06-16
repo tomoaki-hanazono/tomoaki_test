@@ -3,6 +3,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="jinjikyuyo.bean.EmploymentInfoBean" %>
 <%@ page import="jinjikyuyo.bean.EmploymentInfoHistoryBean" %>
+<%@ page import="jinjikyuyo.util.DateFormatUtil" %>
 <%  EmploymentInfoBean employmentInfo = (EmploymentInfoBean)request.getAttribute("employmentInfo"); %>
 <%  List<EmploymentInfoHistoryBean>employmentHistoryList = (List<EmploymentInfoHistoryBean>)request.getAttribute("employmentHistoryList"); %>
 <%  List<String> messageList = (List<String>)request.getAttribute("message"); %>
@@ -43,6 +44,10 @@
 			<tr>
 				<th>雇用期間</th>
 				<td>
+					<select name="wareki" id="startWareki" onChange="changeSWareki(this)">
+						<option value="R">令和</option>
+						<option value="H">平成</option>
+					</select>
 					<select name="startYear" id="startYear">
 						<option value=""></option>
 					</select>年
@@ -96,6 +101,10 @@
 						<option value="31">31</option>
 					</select>日
 					から
+					<select name="wareki" id="endWareki" onChange="changeEWareki(this)">
+						<option value="R">令和</option>
+						<option value="H">平成</option>
+					</select>
 					<select name="endYear" id="endYear">
 						<option value=""></option>
 					</select>年
@@ -249,11 +258,11 @@
 					<tr><th class="w1" colspan="2">雇用期間</th><th class="w1">基準時間</th><th class="w1">超過</th><th class="w1">控除</th></tr>
 					<tr>
 						<td colspan="2">
-							<%= employmentHistory.getEmploymentPeriodStart().substring(0,4) + "年"
+							<%= DateFormatUtil.chageWareki(employmentHistory.getEmploymentPeriodStart().substring(0,4))
 								+ employmentHistory.getEmploymentPeriodStart().substring(4,6) + "月"
 								+ employmentHistory.getEmploymentPeriodStart().substring(6,8) + "日"
 								+ "から"
-								+ employmentHistory.getEmploymentPeriodEnd().substring(0,4) + "年"
+								+ DateFormatUtil.chageWareki(employmentHistory.getEmploymentPeriodEnd().substring(0,4))
 								+ employmentHistory.getEmploymentPeriodEnd().substring(4,6) + "月"
 								+ employmentHistory.getEmploymentPeriodEnd().substring(6,8) + "日" %>
 						</td>

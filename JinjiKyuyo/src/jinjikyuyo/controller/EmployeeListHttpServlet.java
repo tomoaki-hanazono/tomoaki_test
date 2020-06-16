@@ -77,7 +77,7 @@ public class EmployeeListHttpServlet extends HttpServlet {
 			// 作業時間入力画面に遷移
 			operatingTimeServlet.doGet(request, response);
 		} else if(salaryInfo.equals(next)) {
-			// 給与情報画面に善意
+			// 給与情報画面に遷移
 			salaryServlet.doGet(request, response);
 		} else {
 			// 自画面に遷移
