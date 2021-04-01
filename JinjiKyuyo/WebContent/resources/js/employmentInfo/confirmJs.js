@@ -117,6 +117,7 @@ function changeDefault(id) {
 	var commutingAllowance = document.getElementById("commutingAllowance");
 	var overtimeAllowance = document.getElementById("overtimeAllowance");
 	var otherAllowance = document.getElementById("otherAllowance");
+	var residentTax = document.getElementById("residentTax");
 
 	var hiddenStartYear = document.getElementById("hiddenStartYear");
 	var hiddenStartMonth = document.getElementById("hiddenStartMonth");
@@ -133,6 +134,7 @@ function changeDefault(id) {
 	var hiddenCommutingAllowance = document.getElementById("hiddenCommutingAllowance");
 	var hiddenOvertimeAllowance = document.getElementById("hiddenOvertimeAllowance");
 	var hiddenOtherAllowance = document.getElementById("hiddenOtherAllowance");
+	var hiddenResidentTax = document.getElementById("hiddenResidentTax");
 	
 	if (table.classList.contains("tableErr") == true) {
 		table.classList.remove("tableErr");
@@ -152,6 +154,7 @@ function changeDefault(id) {
 	commutingAllowance.value = hiddenCommutingAllowance.value;
 	overtimeAllowance.value = hiddenOvertimeAllowance.value;
 	otherAllowance.value = hiddenOtherAllowance.value;
+	residentTax.value = hiddenResidentTax.value;
 }
 
 function checkDefault() {
@@ -189,6 +192,7 @@ function checkDefault() {
 			var commutingAllowance = document.getElementById("commutingAllowance");
 			var overtimeAllowance = document.getElementById("overtimeAllowance");
 			var otherAllowance = document.getElementById("otherAllowance");
+			var residentTax = document.getElementById("residentTax");
 			
 			var hiddenStartYear = document.getElementById("hiddenStartYear");
 			var hiddenStartMonth = document.getElementById("hiddenStartMonth");
@@ -205,6 +209,7 @@ function checkDefault() {
 			var hiddenCommutingAllowance = document.getElementById("hiddenCommutingAllowance");
 			var hiddenOvertimeAllowance = document.getElementById("hiddenOvertimeAllowance");
 			var hiddenOtherAllowance = document.getElementById("hiddenOtherAllowance");
+			var hiddenResidentTax = document.getElementById("hiddenResidentTax");
 			
 			if( changeStartYear.value == hiddenStartYear.value
 					&& changeStartMonth.value == hiddenStartMonth.value
@@ -220,7 +225,8 @@ function checkDefault() {
 					&& dutiesAllowance.value == hiddenDutiesAllowance.value
 					&& commutingAllowance.value == hiddenCommutingAllowance.value
 					&& overtimeAllowance.value == hiddenOvertimeAllowance.value
-					&& otherAllowance.value == hiddenOtherAllowance.value) {
+					&& otherAllowance.value == hiddenOtherAllowance.value
+					&& residentTax.value == hiddenResidentTax.value) {
 				table.classList.add("tableErr");
 				err++;
 			} else {

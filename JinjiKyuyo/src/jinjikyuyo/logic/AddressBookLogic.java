@@ -71,4 +71,21 @@ public class AddressBookLogic {
 		
 		return count;
 	}
+	
+	/**
+	 * 住所録取得
+	 * @return 住所録一覧
+	 */
+	public AddressBookBean getAddressBook(int employeeId) {
+		AddressBookBean addressBookBean = new AddressBookBean();
+		
+		try {
+			// 住所録一覧取得
+			addressBookBean = dao.select(employeeId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return addressBookBean;
+	}
 }

@@ -114,6 +114,7 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 			String eductionMoney = request.getParameter("eductionMoney");
 			String jobDescription = request.getParameter("jobDescription");
 			String remarks = request.getParameter("remarks");
+			String residentTax = request.getParameter("residentTax");
 			
 			// 入力チェック
 			if (!validator.isRequired(startYear) || !validator.isRequired(startMonth)
@@ -162,10 +163,22 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				message.add("超過は半角数値で入力してください。");
 			}
 			
+			if (!validator.isRequired(excessMoney)) {
+				message.add("超過は必須です。");
+			} else if (!validator.isNumber(excessMoney)) {
+				message.add("超過は半角数値で入力してください。");
+			}
+			
 			if (!validator.isRequired(eductionMoney)) {
 				message.add("控除は必須です。");
 			} else if (!validator.isNumber(eductionMoney)) {
 				message.add("控除は半角数値で入力してください。");
+			}
+			
+			if (!validator.isRequired(residentTax)) {
+				message.add("住民税は必須です。");
+			} else if (!validator.isNumber(residentTax)) {
+				message.add("住民税は半角数値で入力してください。");
 			}
 			
 			// 入力エラーが無い場合
@@ -186,6 +199,7 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				employmentInfo.setEductionMoney(Integer.parseInt(eductionMoney));
 				employmentInfo.setJobDescription(jobDescription);
 				employmentInfo.setRemarks(remarks);
+				employmentInfo.setResidentTax(Integer.parseInt(residentTax));
 				
 				// 雇用情報を新規登録
 				int result = logic.registEmploymentInfo(employmentInfo);
@@ -222,6 +236,7 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 			String upperLimit = request.getParameter("upperLimit");
 			String excessMoney = request.getParameter("excessMoney");
 			String eductionMoney = request.getParameter("eductionMoney");
+			String residentTax = request.getParameter("residentTax");
 			
 			// 入力チェック
 			if (!validator.isRequired(startYear) || !validator.isRequired(startMonth)
@@ -272,6 +287,11 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				message.add("控除は半角数値で入力してください。");
 			}
 			
+			if (validator.isRequired(residentTax)
+					&& !validator.isNumber(residentTax)) {
+				message.add("住民税は半角数値で入力してください。");
+			}
+			
 			// 入力エラーが無い場合
 			if (message.size() == 0) {
 				// リクエストに画面の値を設定
@@ -290,6 +310,7 @@ public class EmploymentInfoConfirmServlet extends HttpServlet {
 				employmentInfo.setEductionMoney(Integer.parseInt(eductionMoney));
 				employmentInfo.setJobDescription(null);
 				employmentInfo.setRemarks(null);
+				employmentInfo.setResidentTax(Integer.parseInt(residentTax));
 				
 				// 雇用情報を更新
 				int reslt = logic.updateEmploymentInfo(employmentInfo);

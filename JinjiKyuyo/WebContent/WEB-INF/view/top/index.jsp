@@ -13,6 +13,8 @@
 	<hr>
 	<a href="./employee/list" class="button">社員一覧</a>
 	<br>
+	<a href="./kinmuJisseki/input" class="button">勤務実績票取込</a>
+	<br>
 	<a href="./maintenance/changeRate" class="button">保険料率変更</a>
 	<br>
 	<a href="./monthryRemuneration/get" class="button">標準月額設定</a>

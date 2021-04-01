@@ -65,7 +65,7 @@ table.salaryAria {
 table.salaryTitelAria {
 	border: none;
 	margin-bottom: 0px;
-	width: 1500px;
+	width: 1200px;
 }
 
 table.salaryTitelAria th {
@@ -83,21 +83,17 @@ table.salaryTitelAria th.title {
 	text-align: center;
 }
 
-table.payslipAria {
-	border: solid 3px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 20px;
-	border-collapse: collapse;
-	width: 1500px;
-}
-
 table.payslipAria th {
 	width: 100px;
+	background-color: #bdf6ff;
+}
+table.payslipAria th.hd {
+	width: auto;
+	background-color: gray;
 }
 
 table.payslipAria td {
-	text-align:right;
+	text-align:center;
 	width: 100px;
 }
 
@@ -180,4 +176,29 @@ input.dayAria {
 
 @media print{
   .noPrint{display:none;}       /* 印刷しない */
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.filebutton {
+	margin: 5px 0px;
+	cursor: default;
+	display: inline-block;
+	padding: 2.5px 7px;
+	text-decoration: none;
+	border-width: 0.5px;
+	border-style: solid;
+	border-color: #a5a5a5;
+	border-image: initial;
+	border-radius: 1px;
+	background: #dddddd;
+	background-image: -webkit-linear-gradient(top, #f7f7f7, #dddddd);
+	background-image: linear-gradient(to bottom, #f7f7f7, #dddddd);
+	color: buttontext;
+	font: 400 13.3333px Arial;
+}
+.filebutton:hover {
+	border-color: #757575;
 }

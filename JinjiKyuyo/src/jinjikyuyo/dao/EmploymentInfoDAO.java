@@ -173,7 +173,8 @@ public class EmploymentInfoDAO extends CommonDAO {
 					" excess_money = ?," + 
 					" eduction_money = ?," + 
 					" lower_limit = ?," + 
-					" upper_limit = ?" + 
+					" upper_limit = ?," + 
+					" resident_tax = ?" + 
 					" WHERE employee_id = ?";
 			
 			// SQL作成
@@ -188,7 +189,8 @@ public class EmploymentInfoDAO extends CommonDAO {
 			st.setInt(7, request.getEductionMoney());
 			st.setInt(8, request.getLowerLimit());
 			st.setInt(9, request.getUpperLimit());
-			st.setInt(10, request.getEmployeeId());
+			st.setInt(10, request.getResidentTax());
+			st.setInt(11, request.getEmployeeId());
 			
 			// SQL実行
 			reslt = st.executeUpdate();

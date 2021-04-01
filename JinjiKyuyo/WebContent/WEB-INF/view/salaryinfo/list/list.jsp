@@ -34,69 +34,98 @@
 <% if(salaryList != null && salaryList.size() > 0) { %>
 <% for(SalaryBean salary : salaryList) { %>
 	<%= salary.getOperatingMonth().substring(0,4) %>年<%= salary.getOperatingMonth().substring(4,6) %>月支給分
-	<table class="salaryAria">
+		<table class="payslipAria" style="margin-left:0;">
 		<tr>
+			<th class="hd" rowspan="2">時<br>間</th>
 			<th>基準時間</th>
-			<td><input type="text" name="lowerLimit_<%= salary.getOperatingMonth() %>" value="<%= salary.getLowerLimit() %>" class="timeAria" readonly>〜<input type="text" name="upperLimit_<%= salary.getOperatingMonth() %>" value="<%= salary.getUpperLimit() %>" class="timeAria" readonly></td>
 			<th>実働時間</th>
-			<td><input type="text" name="operatingTime_<%= salary.getOperatingMonth() %>" value="<%= salary.getOperatingTime() %>" class="timeAria" readonly>h</td>
 			<th>超過時間</th>
-			<td><input type="text" name="upperTime_<%= salary.getOperatingMonth() %>" value="<%= salary.getUpperTime() %>" class="timeAria" readonly>h</td>
 			<th>控除時間</th>
-			<td><input type="text" name="lowarTime_<%= salary.getOperatingMonth() %>" value="<%= salary.getLowarTime() %>" class="timeAria" readonly>h</td>
-			<td colspan="7"></td>
 		</tr>
 		<tr>
-			<td colspan="15"></td>
-		</tr>
-		<tr>
-			<th>基本給</th>
-			<td><input type="text" name="basicSalary_<%= salary.getOperatingMonth() %>" value="<%= salary.getBasicSalary() %>" class="moneyAria" readonly>円</td>
-			<th>職務手当</th>
-			<td><input type="text" name="dutiesAllowance_<%= salary.getOperatingMonth() %>" value="<%= salary.getDutiesAllowance() %>" class="moneyAria" readonly>円</td>
-			<th>通勤手当</th>
-			<td><input type="text" name="commutingAllowance_<%= salary.getOperatingMonth() %>" value="<%= salary.getCommutingAllowance() %>" class="moneyAria" readonly>円</td>
-			<th>時間外手当</th>
-			<td><input type="text" name="overtimeAllowance_<%= salary.getOperatingMonth() %>" value="<%= salary.getOvertimeAllowance() %>" class="moneyAria" readonly>円</td>
-			<th>その他手当</th>
-			<td><input type="text" name="otherAllowance_<%= salary.getOperatingMonth() %>" value="<%= salary.getOtherAllowance() %>" class="moneyAria" readonly>円</td>
-			<th>時間不足控除</th>
-			<td><input type="text" name="shortageDeduction_<%= salary.getOperatingMonth() %>" value="<%= salary.getShortageDeduction() %>" class="moneyAria" readonly>円</td>
-			<td></td>
-			<th>総支給額</th>
-			<td><input type="text" name="totalPayment_<%= salary.getOperatingMonth() %>" value="<%= salary.getTotalPayment() %>" class="moneyAria" readonly>円</td>
-		</tr>
-		<tr>
-			<td colspan="12"></td><td></td><td colspan="2"></td>
-		</tr>
-		<tr>
-			<th>健康保険</th>
-			<td><input type="text" name="healthInsurance_<%= salary.getOperatingMonth() %>" value="<%= salary.getHealthInsurance() %>" class="moneyAria" readonly>円</td>
-			<th>厚生年金</th>
-			<td><input type="text" name="employeePension_<%= salary.getOperatingMonth() %>" value="<%= salary.getEmployeePension() %>" class="moneyAria" readonly>円</td>
-			<th>雇用保険</th>
-			<td><input type="text" name="employmentInsurance_<%= salary.getOperatingMonth() %>" value="<%= salary.getEmploymentInsurance() %>" class="moneyAria" readonly>円</td>
-			<th>所得税</th>
-			<td><input type="text" name="incomeTax_<%= salary.getOperatingMonth() %>" value="<%= salary.getIncomeTax() %>" class="moneyAria" readonly>円</td>
-			<th>住民税</th>
-			<td><input type="text" name="residentTax_<%= salary.getOperatingMonth() %>" value="<%= salary.getResidentTax() %>" class="moneyAria" readonly>円</td>
-			<td colspan="2"></td><td></td>
-			<th>控除合計</th>
-			<td><input type="text" name="totalDeduction_<%= salary.getOperatingMonth() %>" value="<%= salary.getTotalDeduction() %>" class="moneyAria" readonly>円</td>
-		</tr>
-		<tr>
-			<td colspan="12"></td><td></td><td colspan="2"></td>
-		</tr>
-		<tr>
-			<th>超過</th>
-			<td><input type="text" name="excessMoney_<%= salary.getOperatingMonth() %>" value="<%= salary.getExcessMoney() %>" class="moneyAria" readonly>円</td>
-			<th>控除</th>
-			<td><input type="text" name="eductionMoney_<%= salary.getOperatingMonth() %>" value="<%= salary.getEductionMoney() %>" class="moneyAria" readonly>円</td>
-			<td colspan="8"></td><td></td>
-			<th>差引支給</th>
-			<td><input type="text" name="payment_<%= salary.getOperatingMonth() %>" value="<%= salary.getPayment() %>" class="moneyAria" readonly>円</td>
+			<td><%= salary.getLowerLimit() %>〜<%= salary.getUpperLimit() %></td>
+			<td><%= salary.getOperatingTime() %>h</td>
+			<td><%= salary.getUpperTime() %>h</td>
+			<td><%= salary.getLowarTime() %>h</td>
 		</tr>
 	</table>
+	<div>
+		<table class="payslipAria" style="display: inline-block;">
+			<tr>
+				<th class="hd" rowspan="2">支<br>給</th>
+				<th>基本給</th>
+				<th>職務手当</th>
+				<th>その他手当</th>
+				<th>通勤手当</th>
+				<th>時間外手当</th>
+				<th>時間不足控除</th>
+			</tr>
+			<tr>
+				<td><%= salary.getBasicSalary() %></td>
+				<td><%= salary.getDutiesAllowance() %></td>
+				<td><%= salary.getOtherAllowance() %></td>
+				<td><%= salary.getCommutingAllowance() %></td>
+				<td><%= salary.getOvertimeAllowance() %></td>
+				<td><%= salary.getShortageDeduction() %></td>
+			</tr>
+		</table>
+		<table class="payslipAria" style="float: right;">
+			<tr>
+				<th>総支給額</th>
+			</tr>
+			<tr>
+				<td><%= salary.getTotalPayment() %></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<table class="payslipAria" style="display: inline-block;">
+			<tr>
+				<th class="hd" rowspan="2">控<br>除</th>
+				<th>健康保険</th>
+				<th>厚生年金</th>
+				<th>雇用保険</th>
+				<th>所得税</th>
+				<th>住民税</th>
+			</tr>
+			<tr>
+				<td><%= salary.getHealthInsurance() %></td>
+				<td><%= salary.getEmployeePension() %></td>
+				<td><%= salary.getEmploymentInsurance() %></td>
+				<td><%= salary.getIncomeTax() %></td>
+				<td><%= salary.getResidentTax() %></td>
+			</tr>
+		</table>
+		<table class="payslipAria" style="float: right;">
+			<tr>
+				<th>控除合計</th>
+			</tr>
+			<tr>
+				<td><%= salary.getTotalDeduction() %></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<table class="payslipAria" style="display: inline-block;">
+			<tr>
+				<th class="hd" rowspan="2">単<br>価</th>
+				<th>超過</th>
+				<th>控除</th>
+			</tr>
+			<tr>
+				<td><%= salary.getExcessMoney() %></td>
+				<td><%= salary.getEductionMoney() %></td>
+			</tr>
+		</table>
+		<table class="payslipAria" style="float: right;">
+			<tr>
+				<th>差引支給</th>
+			</tr>
+			<tr>
+				<td><%= salary.getPayment() %>円</td>
+			</tr>
+		</table>
+	</div>
 <% } %>
 <% } else {%>
 		<hr>

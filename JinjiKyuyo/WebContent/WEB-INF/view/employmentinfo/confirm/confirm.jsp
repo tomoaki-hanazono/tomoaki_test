@@ -230,6 +230,11 @@
 			<td><input type="text" id="overtimeAllowance" name="overtimeAllowance" value="<%= employmentInfo.getOvertimeAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
 			<td><input type="text" id="otherAllowance" name="otherAllowance" value="<%= employmentInfo.getOtherAllowance() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
 		</tr>
+		<tr><th class="w1">住民税</th><td colspan="4"></td></tr>
+		<tr>
+			<td><input type="text" id="residentTax" name="residentTax" value="<%= employmentInfo.getResidentTax() %>" onChange="checkNumber(this)" class="moneyAria" disabled="disabled">円</td>
+			<td colspan="4"></td>
+		</tr>
 	</table>
 	<div id="employmentInfoHiddenAria">
 		<input type="hidden" id="hiddenStartYear" value="<%= employmentInfo.getEmploymentPeriodStart().substring(0,4) %>">
@@ -247,6 +252,7 @@
 		<input type="hidden" id="hiddenCommutingAllowance" value="<%= employmentInfo.getCommutingAllowance() %>">
 		<input type="hidden" id="hiddenOvertimeAllowance" value="<%= employmentInfo.getOvertimeAllowance() %>">
 		<input type="hidden" id="hiddenOtherAllowance" value="<%= employmentInfo.getOtherAllowance() %>">
+		<input type="hidden" id="hiddenResidentTax" value="<%= employmentInfo.getResidentTax() %>">
 	</div>
 	<input type="submit" id="update" name="update" value="修正" class="button" disabled="disabled">
 	<br>

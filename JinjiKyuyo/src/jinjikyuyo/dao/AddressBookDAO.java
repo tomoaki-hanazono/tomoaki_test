@@ -211,4 +211,73 @@ public class AddressBookDAO extends CommonDAO {
 		
 		return count;
 	}
+	
+
+	
+	/**
+	 * 住所録リスト取得（1件）
+	 * @return 住所録リスト
+	 */
+	public AddressBookBean select(int employeeId) {
+		// 住所録を初期化
+		AddressBookBean addressbook = new AddressBookBean();
+		// コネクションを初期化
+		Connection con = null;
+		
+		try {
+			// DB接続
+			con = getConnection();
+			
+			// SQL文作成
+			String sql = "SELECT * FROM address_book WHERE employee_id = ?";
+			
+			// SQL作成
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, employeeId);
+			
+			// SQL実行
+			ResultSet rs = st.executeQuery();
+
+	        // データをセット
+			while (rs.next()) {
+				addressbook.setEmployeeId(rs.getInt("employee_id"));
+				addressbook.setFullName(rs.getString("full_name"));
+				addressbook.setFamilyName(rs.getString("family_name"));
+				addressbook.setFirstName(rs.getString("first_name"));
+				addressbook.setNameKana(rs.getString("name_kana"));
+				addressbook.setBirthday(rs.getString("birthday"));
+				addressbook.setZipCode(rs.getString("zip_code"));
+				addressbook.setAddress1(rs.getString("address1"));
+				addressbook.setAddress2(rs.getString("address2"));
+				addressbook.setPhoneNumber(rs.getString("phone_number"));
+				addressbook.setMobileNumber(rs.getString("mobile_number"));
+				addressbook.setMailAddress(rs.getString("mail_address"));
+				addressbook.setCompany(rs.getString("company"));
+				addressbook.setDepartment(rs.getString("department"));
+				addressbook.setPosition(rs.getString("position"));
+				addressbook.setKeishou(rs.getString("keishou"));
+				addressbook.setRemarks(rs.getString("remarks"));
+				addressbook.setDependents(rs.getString("dependents"));
+				break;
+			}
+			
+			// 接続解除
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (con != null){
+				try{
+					con.close();
+	        	} catch (SQLException e){
+	        		e.printStackTrace();
+	        	}
+			}
+		}
+		
+		return addressbook;
+	}
 }
